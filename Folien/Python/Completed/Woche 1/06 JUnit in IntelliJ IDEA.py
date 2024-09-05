@@ -14,8 +14,8 @@
 //
 // ## Ein einfacher Test mit JUnit im IDE
 //
-// - Starter-Kit: `code/starter_kits/junit_basics/`
-// - Vollständige Implementierung: `code/complete/junit_basics/`
+// - Starter-Kit: `code/starter-kits/junit-basics-sk/`
+// - Vollständige Implementierung: `code/complete/junit-basics/`
 
 // %% [markdown]
 //
