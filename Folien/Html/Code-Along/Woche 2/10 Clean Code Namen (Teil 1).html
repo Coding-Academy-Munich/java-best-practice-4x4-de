@@ -13086,7 +13086,7 @@ div#notebook {
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=de6fd49ebfa9262d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=b98ed53098edb863"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img alt="Java Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0
@@ -13115,7 +13115,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 " style="display:block;margin:auto;width:5%"/>
 <br/></p>
 <div style="text-align:center; font-size:200%;">
-<b>Refactoring und Tests</b>
+<b>Clean Code: Namen (Teil 1)</b>
 </div>
 <br>
 <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -13125,256 +13125,237 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=a2d2ea99a511eedc"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=6cca43b3d6fdcec4"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Namen sind ein mächtiges Kommunikationsmittel.</p>
 <ul>
-<li>Zum Refactoring brauchen wir Tests<ul>
-<li>Sonst können wir nicht wissen, ob wir das Verhalten geändert haben</li>
-</ul>
-</li>
-<li>Aber: manche Tests erschweren das Refactoring</li>
+<li>Sie sind überall im Programm zu finden</li>
+<li>Sie verbinden den Code mit Domänen-Konzepten.</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=60a66139d71baa2a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Tests-f%C3%BCr-Refactoring">Tests für Refactoring<a class="anchor-link" href="#Tests-f%C3%BCr-Refactoring">¶</a></h2><ul>
-<li>Schreiben Sie Tests, die das öffentliche Verhalten testen</li>
-<li>Vermeiden Sie alle Tests, die sich auf Implementierungs-Details beziehen<ul>
-<li>Auch für Unit-Tests</li>
-</ul>
-</li>
-<li>Dazu testen sich oft Methoden gegenseitig</li>
-<li>Das ist OK!</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5fad29fa654ced87">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=02b53bb5803e6b71">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Stack</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0b725352ba33033c">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">"Passed"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">"FAILED"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">40.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Not allowed!"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">" test for '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"'"</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mf">40.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">60.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=eecf65d75cc8c70b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Testen Sie NICHT so!</strong></p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=78993b54dd80d200">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f28f6ba4c1fb4c66">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">StackTester</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Access the protected data member of the stack</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">Object</span><span class="o">[]</span><span class="w"> </span><span class="nf">getData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">elementData</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">foo</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=a715b24718495d02">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">REGULAR_PAY_PER_HOUR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">40.0</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">OVERTIME_PAY_PER_HOUR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.0</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">MAX_ALLOWED_OVERTIME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">40.0</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=87af93124b860b59">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">computeTotalSalary</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">regularHoursWorked</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">overtimeHoursWorked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">overtimeHoursWorked</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MAX_ALLOWED_OVERTIME</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Not allowed!"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">// Access the actual number of elements in the stack</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getActualSize</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">elementCount</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">regularPay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regularHoursWorked</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">REGULAR_PAY_PER_HOUR</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">overtimePay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">overtimeHoursWorked</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">OVERTIME_PAY_PER_HOUR</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">regularPay</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">overtimePay</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f3babf9c5ca99b2f">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d5edfc446ab43ba8">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">StackTester</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StackTester</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="n">unit</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-
-<span class="n">check</span><span class="p">(</span><span class="n">unit</span><span class="p">.</span><span class="na">getActualSize</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"stack size is 1"</span><span class="p">);</span>
-<span class="n">check</span><span class="p">(</span><span class="n">unit</span><span class="p">.</span><span class="na">getData</span><span class="p">()</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="s">"first element is 1"</span><span class="p">);</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unit</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
-
-<span class="n">check</span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"pop result is 0"</span><span class="p">);</span>
-<span class="n">check</span><span class="p">(</span><span class="n">unit</span><span class="p">.</span><span class="na">getActualSize</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">"size after popping is 0"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">computeTotalSalary</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=603bf8e1754e21a7"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Für <code>java.util.Stack</code> ist in der Spezifikation festgelegt, wie er implementiert ist</li>
-<li>Aber in "normalem" Code könnte sich die Implementierung jederzeit ändern</li>
-<li>Testen Sie statt dessen so:</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=bd20a2f9eba2893c">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=063c71de8d6a2c95">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Stack</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">severity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span><span class="p">;</span><span class="w"> </span><span class="c1">// Is this high or low?</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=88b8ad84f46a58c1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d3eac6c8d4034199">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">Stack</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="n">unit</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-
-<span class="n">check</span><span class="p">(</span><span class="n">unit</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"stack size is 1"</span><span class="p">);</span>
-<span class="n">check</span><span class="p">(</span><span class="n">unit</span><span class="p">.</span><span class="na">peek</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"top element is 1"</span><span class="p">);</span>
-
-<span class="n">unit</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
-<span class="n">check</span><span class="p">(</span><span class="n">unit</span><span class="p">.</span><span class="na">empty</span><span class="p">(),</span><span class="w"> </span><span class="s">"stack is empty after popping"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">severity</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=d71be5b7eb1a460f"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=755b1e8dcc93fcea"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Diese Tests testen das öffentliche Verhalten</li>
-<li>Das öffentliche Interface muss geeignet sein, diese Tests zu schreiben<ul>
-<li>Versuchen Sie <strong>nicht</strong>, das durch Getter und Setter für jeden
-Daten-Member zu erreichen</li>
-<li>Stattdessen sollten Sie Abfragen oder einen "abstrakten Zustand"
-öffentlich machen</li>
-<li>Für den Stack sind das z.B. die <code>peek()</code> und <code>size()</code>-Methoden</li>
-</ul>
-</li>
-<li>Meistens macht das auch die normale Benutzung der Klasse einfacher</li>
-<li>TDD ist ein Weg um das zu erreichen<ul>
-<li>Aber: Schreiben Sie auch in TDD Tests für Feature-Inkremente, nicht für
-Implementierungs-Inkremente</li>
-</ul>
-</li>
+<h3 id="Konstanten">Konstanten<a class="anchor-link" href="#Konstanten">¶</a></h3><ul>
+<li>Namen für besondere Werte</li>
+<li>Klarer, als die Werte direkt zu verwenden</li>
+<li>Direkter Bezug zwischen Name und Wert</li>
+<li>Wenig Information über alle möglichen Werte</li>
+<li>Wenig Bezug zum Typsystem</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=8bf4d06bb5b4bbeb"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Workshop:-Vorrangwarteschlange-(Priority-Queue)">Workshop: Vorrangwarteschlange (Priority Queue)<a class="anchor-link" href="#Workshop:-Vorrangwarteschlange-(Priority-Queue)">¶</a></h2><p>In diesem Workshop sollen Sie eine Vorrangwarteschlange testen, ohne sich auf
-ihre internen Implementierungsdetails zu verlassen.</p>
-<h3 id="Hintergrund">Hintergrund<a class="anchor-link" href="#Hintergrund">¶</a></h3><p>Eine Vorrangwarteschlange ist eine Datenstruktur, die Elemente mit
-zugehörigen Prioritäten speichert. Sie unterstützt zwei Hauptoperationen:</p>
-<ul>
-<li>Enqueue: Füge ein Element mit einer gegebenen Priorität hinzu</li>
-<li>Dequeue: Entferne und gib das Element mit der höchsten Priorität zurück</li>
-</ul>
-<p>Die Herausforderung besteht darin, zu überprüfen, dass die Vorrangwarteschlange
-die Reihenfolge der Elemente korrekt beibehält, ohne direkt auf ihre interne
-Struktur zuzugreifen.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=f3a131aa008ac388"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Die folgende <code>PriorityQueue</code>-Klasse implementiert die übliche Schnittstelle
-für eine Vorrangwarteschlange mit einer einfachen Listen-basierten
-Repräsentation:</p>
-<ul>
-<li><code>void enqueue(T item, int priority)</code>: Füge ein Element mit der gegebenen
-Priorität hinzu</li>
-<li><code>T dequeue()</code>: Entferne und gib das Element mit der höchsten Priorität zurück</li>
-<li><code>boolean isEmpty()</code>: Gib true zurück, wenn die Warteschlange leer ist, sonst
-false</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=fc6e14c475b537d9">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d04a30fca047e25a">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Comparator</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">SEVERITY_HIGH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=40e7d9db1539a2f0">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=65dea3ad06652caf"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Enumerationen">Enumerationen<a class="anchor-link" href="#Enumerationen">¶</a></h3><ul>
+<li>Alternative zu Konstanten</li>
+<li>Dokumentieren, welche Werte erwartet werden</li>
+<li>Bessere Typsicherheit</li>
+<li>Weniger Flexibilität</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=085c81bd11d23055">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PriorityItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">items</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">Severity</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">HIGH</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MEDIUM</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LOW</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=3b59d6816ff9d0a3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Severity</span><span class="w"> </span><span class="n">severity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Severity</span><span class="p">.</span><span class="na">HIGH</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=f344c6119ad0f25b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Klassen-und-Structs">Klassen und Structs<a class="anchor-link" href="#Klassen-und-Structs">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=77f535b43203e911">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">java.util.AbstractMap.SimpleEntry</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=c2eb48bb2cfbd511">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">SimpleEntry</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">analyzeReview</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">text</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s">"Generally positive"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=94d0f457d99aa0a4">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">SimpleEntry</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analyzeReview</span><span class="p">(</span><span class="s">"Some review text"</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Score: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getKey</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">", Sentiment: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getValue</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=fc3affefb392952d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AnalysisResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">sentiment</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">PriorityQueue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">AnalysisResult</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">sentiment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">sentiment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sentiment</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">enqueue</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">items</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">PriorityItem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="n">priority</span><span class="p">));</span>
-<span class="w">        </span><span class="n">items</span><span class="p">.</span><span class="na">sort</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="na">priority</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">priority</span><span class="p">));</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getScore</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">dequeue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">"Queue is empty"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">items</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">item</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getSentiment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">sentiment</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">items</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PriorityItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
-<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">;</span>
-
-<span class="w">        </span><span class="n">PriorityItem</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">priority</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Score: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">getScore</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">", Sentiment: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">getSentiment</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13382,200 +13363,73 @@ false</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=1bd82c9163840c80"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Schreiben Sie einen Tests, die das korrekte Verhalten der
-Vorrangwarteschlange über ihre öffentliche Schnittstelle verifizieren. Ihre
-Tests sollten folgendes abdecken:</p>
-<ol>
-<li>Grundlegende Funktionalität (<code>enqueue</code>, <code>dequeue</code>, <code>isEmpty</code>)</li>
-<li>Korrekte Prioritäten-Reihenfolge beim Herausnehmen von Elementen mit <code>dequeue</code></li>
-<li>Umgang mit Elementen mit gleichen Prioritäten</li>
-<li>Randfälle (leere Warteschlange, einzelnes Element)</li>
-</ol>
-<p>Denken Sie daran, dass Sie in Ihren Tests nicht auf die interne Struktur der
-Warteschlange zugreifen können!</p>
-<ul>
-<li>Welche Strategien haben Sie verwendet, um die Prioritäten-Reihenfolge zu
-testen, ohne auf die interne Struktur zuzugreifen?</li>
-<li>Wie sicher sind Sie, dass Ihre Tests das Verhalten der Vorrangwarteschlange
-vollständig verifizieren?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=1bfd1eeaa41b98d4">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5895f0f2184dd397">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">AnalysisResult</span><span class="w"> </span><span class="nf">analyzeReview</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">text</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnalysisResult</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s">"Overall positive"</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=43e4854eb35da6c1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4f2a626dc611207b">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">AnalysisResult</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analyzeReview</span><span class="p">(</span><span class="s">"Some review text"</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=9e34aa251c4f4aa1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=8792c4cdaf7b8065">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">enum</span><span class="w"> </span><span class="n">Score</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">HIGH</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MODERATELY_HIGH</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MEDIUM</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MODERATELY_LOW</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LOW</span><span class="p">,</span>
+<span class="w">    </span><span class="n">UNKNOWN</span><span class="p">,</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d9a79fc77081dd9">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=031e1f97c258b36b">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=90c506803ac4cad1">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=9e098ad7e52cd21d">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=4489640a7969cc59"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Heap-basierte-Implementierung">Heap-basierte Implementierung<a class="anchor-link" href="#Heap-basierte-Implementierung">¶</a></h3><p>Die Listen-basierte Implementierung der Vorrangwarteschlange hat eine
-Komplexität von O(n) für das Einfügen und Entfernen von Elementen. Eine
-effizientere Implementierung verwendet einen Heap, um die Operationen in O(log
-n) durchzuführen.</p>
-<p>Hier ist eine einfache Heap-basierte Implementierung der Vorrangwarteschlange:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=428b8d8adcc33852">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Comparator</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AnalysisResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Score</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">sentiment</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PriorityItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">heap</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Comparator</span><span class="o">&lt;</span><span class="n">PriorityItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">comparator</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">PriorityQueue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">heap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">comparator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="na">priority</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">priority</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">AnalysisResult</span><span class="p">(</span><span class="n">Score</span><span class="w"> </span><span class="n">score</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">sentiment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">sentiment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sentiment</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">enqueue</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">heap</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">PriorityItem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="n">priority</span><span class="p">));</span>
-<span class="w">        </span><span class="n">siftUp</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Score</span><span class="w"> </span><span class="nf">getScore</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">dequeue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">"Queue is empty"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">item</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">lastIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">        </span><span class="n">heap</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">lastIndex</span><span class="p">));</span>
-<span class="w">        </span><span class="n">heap</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">lastIndex</span><span class="p">);</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">siftDown</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getSentiment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">sentiment</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">siftUp</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">parentIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">comparator</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">index</span><span class="p">),</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">parentIndex</span><span class="p">))</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="k">break</span><span class="p">;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="n">swap</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">parentIndex</span><span class="p">);</span>
-<span class="w">            </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parentIndex</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">siftDown</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">leftChild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">rightChild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">highest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="p">;</span>
-
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">leftChild</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">comparator</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">leftChild</span><span class="p">),</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">highest</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">highest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftChild</span><span class="p">;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rightChild</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">comparator</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">rightChild</span><span class="p">),</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">highest</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">highest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rightChild</span><span class="p">;</span>
-<span class="w">            </span><span class="p">}</span>
-
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">highest</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="k">break</span><span class="p">;</span>
-<span class="w">            </span><span class="p">}</span>
-
-<span class="w">            </span><span class="n">swap</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">highest</span><span class="p">);</span>
-<span class="w">            </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">highest</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">PriorityItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<span class="w">        </span><span class="n">heap</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">heap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">j</span><span class="p">));</span>
-<span class="w">        </span><span class="n">heap</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PriorityItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
-<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">;</span>
-
-<span class="w">        </span><span class="n">PriorityItem</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">priority</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Score: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">getScore</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">", Sentiment: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">getSentiment</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13583,34 +13437,66 @@ n) durchzuführen.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=e6e76bed291bcdb5"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Funktionieren Ihre Tests für die Listen-basierte Implementierung auch für die
-Heap-basierte Implementierung?</p>
-<p><em>Hinweis:</em> Sie können im Notebook einfach die Zelle mit der neuen
-Implementierung der Vorrangwarteschlange ausführen und dann die Zellen mit
-Ihren Tests erneut ausführen.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=6cb593d72a831868"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Die Klasse <code>HeapPriorityQueueTest</code> ist eine exakte Kopie der Klasse
-<code>PriorityQueueTest</code>, aber sie ist hier nochmal angegeben, um das Testen der
-Heap-basierten Implementierung zu erleichtern.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=a5f4bab2e55dfe62">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=78168ce16d5055f5">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
+<div class="highlight hl-java"><pre><span></span><span class="n">AnalysisResult</span><span class="w"> </span><span class="nf">analyzeReview</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">text</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnalysisResult</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="na">MODERATELY_HIGH</span><span class="p">,</span><span class="w"> </span><span class="s">"Overall positive"</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=2594e834d071a482">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">AnalysisResult</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analyzeReview</span><span class="p">(</span><span class="s">"Some review text"</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=60ec04344f97790e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Was-ist-ein-guter-Name?">Was ist ein guter Name?<a class="anchor-link" href="#Was-ist-ein-guter-Name?">¶</a></h2><ul>
+<li>Präzise (sagt was er meint, meint was er sagt)</li>
+<li>Beantwortet<ul>
+<li>Warum gibt es diese Variable (Funktion, Klasse, Modul, Objekt...)?</li>
+<li>Was macht sie?</li>
+<li>Wie wird sie verwendet?</li>
+</ul>
+</li>
+</ul>
+<p>Gute Namen sind schwer zu finden!</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=1804c18ec5d18007"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Was-ist-ein-schlechter-Name?">Was ist ein schlechter Name?<a class="anchor-link" href="#Was-ist-ein-schlechter-Name?">¶</a></h2><ul>
+<li>Braucht einen Kommentar</li>
+<li>Verbreitet Disinformation</li>
+<li>Entspricht nicht den Namensregeln</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=d9b4842db2ad3aa6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Workshop:-Rezepte">Workshop: Rezepte<a class="anchor-link" href="#Workshop:-Rezepte">¶</a></h2><p>In <code>code/starter-kits/recipes-sk</code> ist ein Programm, mit denen sich ein
+Kochbuch verwalten lässt. Leider hat der Programmierer sehr schlechte Namen
+verwendet, dadurch ist das Programm schwer zu verstehen.</p>
+<p>Ändern Sie die Namen so, dass das Programm leichter verständlich wird.</p>
+<h3 id="Hinweis">Hinweis<a class="anchor-link" href="#Hinweis">¶</a></h3><p>Verwenden Sie die Refactoring-Tools Ihrer Entwicklungsumgebung!</p>
 </div>
 </div>
 </div>

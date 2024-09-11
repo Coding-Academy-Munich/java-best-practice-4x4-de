@@ -13086,7 +13086,7 @@ div#notebook {
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=bce56981a0832293"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=9bc68523c2cfaf0e"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img alt="Java Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0
@@ -13115,7 +13115,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 " style="display:block;margin:auto;width:5%"/>
 <br/></p>
 <div style="text-align:center; font-size:200%;">
-<b>Refactoring Catalog: Basics</b>
+<b>Refactoring: Extrahiere Funktion</b>
 </div>
 <br>
 <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -13125,59 +13125,337 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=5cf4dad3e97a40fe"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=c0e9616ab3f3bc73"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Refactoring-Katalog">Refactoring-Katalog<a class="anchor-link" href="#Refactoring-Katalog">¶</a></h1><ul>
-<li>Katalog von Refactorings</li>
-<li>Beschreibung von Refactorings in standardisiertem Format<ul>
-<li>Name</li>
-<li>Skizze</li>
-<li>Motivation</li>
-<li>Mechanik</li>
-<li>Beispiel</li>
+<h3 id="Extrahiere-Funktion">Extrahiere Funktion<a class="anchor-link" href="#Extrahiere-Funktion">¶</a></h3><ul>
+<li>Anwendung:<ul>
+<li>Funktion ist zu groß</li>
+<li>Funktion ist zu komplex</li>
+<li>Funktion ist schwer zu verstehen</li>
+<li>Funktion hat zu viele Aufgaben</li>
+</ul>
+</li>
+<li>Invers zu <em>Inline Function</em></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5639da13d72950f2">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=e91179e0109d8530">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">OrderLine</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">product</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">quantity</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">OrderLine</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">product</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">quantity</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">product</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">quantity</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">price</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"OrderLine{"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">quantity</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" x "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" @ $"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">price</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"}"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=f0e0b2484ff053b1">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">static</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">OrderLine</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">makeOrderLines</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">OrderLine</span><span class="o">&gt;</span><span class="w"> </span><span class="n">orderLines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">orderLines</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OrderLine</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">));</span>
+<span class="w">    </span><span class="n">orderLines</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OrderLine</span><span class="p">(</span><span class="s">"Banana"</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">));</span>
+<span class="w">    </span><span class="n">orderLines</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OrderLine</span><span class="p">(</span><span class="s">"Orange"</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">orderLines</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=67bec8564736fd0a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Beispiel">Beispiel<a class="anchor-link" href="#Beispiel">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=fb7e9bc1b83bf715">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Formatter</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9eac0f301f096981">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">ReceiptPrinter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printReceipt</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">OrderLine</span><span class="o">&gt;</span><span class="w"> </span><span class="n">orderLines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Print order lines</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">OrderLine</span><span class="w"> </span><span class="n">orderLine</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">orderLines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"%-12s %4d x %6.2f€%n"</span><span class="p">,</span>
+<span class="w">                </span><span class="n">orderLine</span><span class="p">.</span><span class="na">product</span><span class="p">,</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">quantity</span><span class="p">,</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">price</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Compute total</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">OrderLine</span><span class="w"> </span><span class="n">orderLine</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">orderLines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">quantity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">price</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Print total</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"Total: %.2f€%n"</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=6d8fc4da1497ea2b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">ReceiptPrinter</span><span class="p">.</span><span class="na">printReceipt</span><span class="p">(</span><span class="n">makeOrderLines</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_start celltag_subslide" id="cell-id=a5c76ac0df67ec78">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">ReceiptPrinter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printReceipt</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">OrderLine</span><span class="o">&gt;</span><span class="w"> </span><span class="n">orderLines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Print order lines</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">OrderLine</span><span class="w"> </span><span class="n">orderLine</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">orderLines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"%-12s %4d x %6.2f€%n"</span><span class="p">,</span>
+<span class="w">                </span><span class="n">orderLine</span><span class="p">.</span><span class="na">product</span><span class="p">,</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">quantity</span><span class="p">,</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">price</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Compute total</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">OrderLine</span><span class="w"> </span><span class="n">orderLine</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">orderLines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">quantity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">orderLine</span><span class="p">.</span><span class="na">price</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Print total</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"Total: %.2f€%n"</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2eaf1c2c039b7c40">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">ReceiptPrinter</span><span class="p">.</span><span class="na">printReceipt</span><span class="p">(</span><span class="n">makeOrderLines</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=1fd57abae078719e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Motivation">Motivation<a class="anchor-link" href="#Motivation">¶</a></h4><ul>
+<li>Jedes Code-Fragment, das man nicht unmittelbar versteht, sollte in eine
+Funktion extrahiert werden</li>
+<li>Name der Funktion spiegelt wieder, <strong>was</strong> die Intention des Codes ist</li>
+<li>Das kann zu Funktionen führen, die nur eine Zeile Code enthalten</li>
+<li>Es ist dabei besonders wichtig, dass die Funktionen <strong>gute</strong> Namen haben</li>
+<li>Kommentare in Funktionen, die sagen, was der nächste Code-Block macht,
+sind ein Hinweis auf eine mögliche Extraktion</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=bf0e1e8994a5ca2d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Mechanik">Mechanik<a class="anchor-link" href="#Mechanik">¶</a></h4><ul>
+<li>Erzeuge eine neue Funktion<ul>
+<li>Benenne sie nach der Intention des Codes</li>
+</ul>
+</li>
+<li>Kopiere den extrahierten Code in die neue Funktion</li>
+<li>Übergebe alle Variablen, die die Funktion benötigt, als Parameter<ul>
+<li>Wenn vorher deklarierte Variablen nur in der neuen Funktion verwendet
+werden, können sie auch als lokale Variablen in der neuen Funktion
+deklariert werden</li>
+</ul>
+</li>
+<li>Breche die Extraktion ab, falls die Funktion zu viele Parameter bekommt<ul>
+<li>Wende stattdessen andere Refactorings an, die die Extraktion einfacher
+machen (Split Variables, Replace Temp with Query, ...)</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=048f9d0762ba168a"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=91be7ba68ce920a7"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Jeder Schritt im Mechanik-Abschnitt ist so klein wie möglich</li>
-<li>Wenn man mit dem Refactoring vertraut ist, kann man mit größeren Schritten
-arbeiten</li>
-<li>Alternative Vorgehensweisen sind möglich</li>
+<h3 id="Beispiel-f%C3%BCr-fehlgeschlagene-Extraktion">Beispiel für fehlgeschlagene Extraktion<a class="anchor-link" href="#Beispiel-f%C3%BCr-fehlgeschlagene-Extraktion">¶</a></h3><ul>
+<li>Siehe <code>code/completed/invoice/v2</code> für ein Beispiel einer Extraktion,
+die abgebrochen wird<ul>
+<li>IntelliJ kommt beim Refactoring dieser Funktion in eine Endlosschleife
+und erzeugt ungültigen Code, wenn man sie abbricht</li>
+</ul>
+</li>
+<li>Siehe <code>code/completed/invoice/v3</code> für eine erfolgreiche
+Extraktion (nach etwas Refactoring)</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=55c08c393b5dd590"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=6a43c362c9b64be2"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Grundlegende-Refactorings">Grundlegende Refactorings<a class="anchor-link" href="#Grundlegende-Refactorings">¶</a></h2><ul>
-<li>Extrahiere Funktion</li>
-<li>Inline Function</li>
-<li>Extrahiere Variable</li>
-<li>Inline Variable</li>
-<li>Ändere Funktionsdeklaration</li>
+<h2 id="Workshop:-Extrahiere-Funktion">Workshop: Extrahiere Funktion<a class="anchor-link" href="#Workshop:-Extrahiere-Funktion">¶</a></h2><ul>
+<li>Wenden Sie das "Extrahiere Funktion"-Refactoring auf die Methode <code>processUserData</code>
+an:</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=7184f2095a8d798a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Kapsle Variable</li>
-<li>Benenne Variable um</li>
-<li>Führe Parameterobjekt ein</li>
-<li>Kombiniere Funktionen zu Klasse</li>
-<li>Kombiniere Funktionen zu Transformation</li>
-<li>Teile in Phasen auf</li>
-</ul>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=feaa749bc9c5e253">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=967b00b8a0e6b37d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">UserDataProcessor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">User</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processUserData</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Convert string data to User objects</span>
+<span class="w">        </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">userStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userData</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">";"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userString</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">userStrings</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userString</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">","</span><span class="p">);</span>
+<span class="w">            </span><span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)));</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Calculate average age</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">totalAge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">users</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">totalAge</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">age</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">averageAge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">totalAge</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Print report</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"User Report:"</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">users</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" is "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" years old"</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"Average age: %.1f years%n"</span><span class="p">,</span><span class="w"> </span><span class="n">averageAge</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Alice,30;Bob,25;Charlie,35"</span><span class="p">;</span>
+<span class="w">        </span><span class="n">processUserData</span><span class="p">(</span><span class="n">userData</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=5d99ec91e277fa6b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=ac6944911a66e90a">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=45a64e63290567cf">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=6b4e03423667dbb7">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

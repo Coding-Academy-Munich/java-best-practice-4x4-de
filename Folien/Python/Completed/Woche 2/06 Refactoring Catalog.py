@@ -2,7 +2,7 @@
 // %% [markdown]
 //
 // <div style="text-align:center; font-size:200%;">
-//  <b>Refactoring Catalog: Basics</b>
+//  <b>Refactoring Catalog</b>
 // </div>
 // <br/>
 // <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -38,11 +38,11 @@
 // - Extrahiere Variable
 // - Inline Variable
 // - Ändere Funktionsdeklaration
+// - Kapsle Variable
+// - Benenne Variable um
 
 // %% [markdown]
 //
-// - Kapsle Variable
-// - Benenne Variable um
 // - Führe Parameterobjekt ein
 // - Kombiniere Funktionen zu Klasse
 // - Kombiniere Funktionen zu Transformation
