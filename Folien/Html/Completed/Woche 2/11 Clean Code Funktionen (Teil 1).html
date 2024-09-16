@@ -13125,7 +13125,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=472f61c2dd6db1d0"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=f3767273ac64982b"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-package">Fasse Operationen, die logisch zusammengehören, als sorgfältig benannte
@@ -13134,8 +13134,8 @@ F.1)</a></p>
 <ul>
 <li>Besser lesbar</li>
 <li>Einfacher zu testen</li>
-<li>Wird eher wiederverwendet</li>
 <li>Fehler sind weniger wahrscheinlich</li>
+<li>Wird eher wiederverwendet</li>
 </ul>
 </div>
 </div>
@@ -13265,33 +13265,53 @@ F.2)</a></li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=cda8320fb8740b6b">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=20e1085c71055ea5">
 <div class="input">
 <div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// System.out.println(newResult);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">newResult</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[5]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>7</pre>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=9b5eb41dc7f42c30">
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=5105deb0b236742e">
 <div class="input">
 <div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// System.out.println(allResults);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">allResults</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[6]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[12, 43, 7]</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=2c9a8346520e270c"><div class="prompt input_prompt">
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=215c412bffd34117"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>Messung und Auswertung der Ergebnisse</li>
+<li>Messung, Auswertung und Validierung der Ergebnisse</li>
 </ul>
 </div>
 </div>
@@ -13411,20 +13431,7 @@ F.2)</a></li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=0aa228e5c129826b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Fragen">Fragen<a class="anchor-link" href="#Fragen">¶</a></h3><ul>
-<li>Macht <code>performMeasurementAndProcessResult()</code> das Gleiche wie <code>doStuff()</code>?</li>
-<li>Ist die Funktion <code>performMeasurementAndProcessResult()</code> wirklich besser?</li>
-<li>Konzentriert sie sich auf eine Aufgabe?</li>
-<li>Unterscheiden sich Ihre Aufgaben von <code>doStuff()</code>?</li>
-<li>Warum (nicht)?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=d57df80a9416c6c6">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=de2b6708b36904e8">
 <div class="input">
 <div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
@@ -13471,25 +13478,58 @@ F.2)</a></li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=02345a90b42d0501">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=a68ca706fb266b18">
 <div class="input">
 <div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// System.out.println(newResult);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">newResult</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[16]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>7</pre>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=095a3f453e1df596">
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e814b20f3028bf11">
 <div class="input">
 <div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// System.out.println(allResults);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">allResults</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[17]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[12, 43, 7]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=0aa228e5c129826b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fragen">Fragen<a class="anchor-link" href="#Fragen">¶</a></h3><ul>
+<li>Macht <code>performMeasurementAndProcessResult()</code> das Gleiche wie <code>doStuff()</code>?</li>
+<li>Ist die Funktion <code>performMeasurementAndProcessResult()</code> wirklich besser?</li>
+<li>Konzentriert sie sich auf eine Aufgabe?</li>
+<li>Unterscheiden sich Ihre Aufgaben von <code>doStuff()</code>?</li>
+<li>Warum (nicht)?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -13503,7 +13543,7 @@ F.2)</a></li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=bbaa3689a76e2143"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=11dfa972c8bbce45"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <table>
@@ -13524,6 +13564,11 @@ F.2)</a></li>
 <td>Berechnung</td>
 <td style="text-align:left">✓</td>
 <td style="text-align:left">❌ <code>computeDataForNextTimestep()</code></td>
+</tr>
+<tr>
+<td>Validierung</td>
+<td style="text-align:left">✓</td>
+<td style="text-align:left">❌ <code>isValidResult()</code></td>
 </tr>
 <tr>
 <td>Speichern</td>
@@ -13594,7 +13639,7 @@ Abstraktionsebene unterhalb der Funktion selbst sein.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=e9404e688f178c5a"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=e100813f27abbf07"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Kommentare-als-%22Um-Zu%22-Abs%C3%A4tze">Kommentare als "Um-Zu"-Absätze<a class="anchor-link" href="#Kommentare-als-%22Um-Zu%22-Abs%C3%A4tze">¶</a></h2><ul>
@@ -13602,12 +13647,12 @@ Abstraktionsebene unterhalb der Funktion selbst sein.</li>
 Abstraktionsebenen zu kontrollieren</li>
 <li>Wir können die "Um-Zu"-Absätze als Kommentare schreiben bevor wir den Code
 schreiben</li>
-<li>Meistens wird jeder Absatz zu einer Funktion</li>
+<li>Meistens wird jeder Kommentar zu einer Funktion</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=9f67c11560a3a37b">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=275c40c9a5774969">
 <div class="input">
 <div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
@@ -13618,13 +13663,13 @@ schreiben</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=815ec5d187703385">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=5ab6634e0f13ca3a">
 <div class="input">
 <div class="prompt input_prompt">In [19]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderProcessor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// Hole die Bestelldetails anhand der `orderID`</span>
 <span class="w">        </span><span class="c1">// Validiere die Lagerverfügbarkeit für jeden Artikel in der Bestellung</span>
 <span class="w">        </span><span class="c1">// Aktualisiere den Lagerbestand bei erfolgreicher Validierung</span>
@@ -13644,16 +13689,47 @@ schreiben</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5795b9b88d4ee595"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processUserRegistration</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">validateUserData</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">);</span>
-<span class="w">    </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createNewUser</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">);</span>
-<span class="w">    </span><span class="n">sendConfirmationEmail</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="n">logSuccessfulRegistration</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=46437875c12b347d">
+<div class="input">
+<div class="prompt input_prompt">In [20]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderProcessor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Hole die Bestelldetails anhand der `orderID`</span>
+<span class="w">        </span><span class="n">fetchOrderDetails</span><span class="p">(</span><span class="n">orderID</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Validiere die Lagerverfügbarkeit für jeden Artikel in der Bestellung</span>
+<span class="w">        </span><span class="n">validateStockAvailability</span><span class="p">(</span><span class="n">orderID</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Aktualisiere den Lagerbestand bei erfolgreicher Validierung</span>
+<span class="w">        </span><span class="n">updateInventory</span><span class="p">(</span><span class="n">orderID</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Erzeuge eine Lieferung für die Bestellung</span>
+<span class="w">        </span><span class="n">generateShipment</span><span class="p">(</span><span class="n">orderID</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Benachrichtige den Kunden mit den Lieferdetails</span>
+<span class="w">        </span><span class="n">notifyCustomer</span><span class="p">(</span><span class="n">orderID</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fetchOrderDetails</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">validateStockAvailability</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">updateInventory</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">generateShipment</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">notifyCustomer</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

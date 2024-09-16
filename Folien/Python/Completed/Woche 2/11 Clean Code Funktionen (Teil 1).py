@@ -18,8 +18,8 @@
 //
 // - Besser lesbar
 // - Einfacher zu testen
-// - Wird eher wiederverwendet
 // - Fehler sind weniger wahrscheinlich
+// - Wird eher wiederverwendet
 
 // %% [markdown]
 //
@@ -79,14 +79,14 @@ List<Integer> allResults = new ArrayList<>(List.of(12, 43));
 int newResult = doStuff(2, 4, allResults);
 
 // %%
-// System.out.println(newResult);
+newResult
 
 // %%
-// System.out.println(allResults);
+allResults
 
 // %% [markdown]
 //
-// - Messung und Auswertung der Ergebnisse
+// - Messung, Auswertung und Validierung der Ergebnisse
 
 // %%
 int getMeasurement(int a, int b) {
@@ -137,6 +137,18 @@ public static int performMeasurementAndProcessResult(int a, int b, List<Integer>
     return newResult;
 }
 
+// %%
+List<Integer> allResults = new ArrayList<>(List.of(12, 43));
+
+// %%
+int newResult = performMeasurementAndProcessResult(2, 4, allResults);
+
+// %%
+newResult
+
+// %%
+allResults
+
 // %% [markdown]
 //
 // ### Fragen
@@ -146,18 +158,6 @@ public static int performMeasurementAndProcessResult(int a, int b, List<Integer>
 // - Konzentriert sie sich auf eine Aufgabe?
 // - Unterscheiden sich Ihre Aufgaben von `doStuff()`?
 // - Warum (nicht)?
-
-// %%
-List<Integer> allResults = new ArrayList<>(List.of(12, 43));
-
-// %%
-int newResult = performMeasurementAndProcessResult(2, 4, allResults);
-
-// %%
-// System.out.println(newResult);
-
-// %%
-// System.out.println(allResults);
 
 // %% [markdown]
 //
@@ -172,6 +172,7 @@ int newResult = performMeasurementAndProcessResult(2, 4, allResults);
 // | --------------------- | :---------- | :------------------------------------- |
 // | Messung               | ✓           | ❌ `getMeasurement()`                 |
 // | Berechnung            | ✓           | ❌ `computeDataForNextTimestep()`     |
+// | Validierung           | ✓           | ❌ `isValidResult()`                  |
 // | Speichern             | ✓           | ❌ `saveResult()`                     |
 // | Drucken               | ✓           | ❌ `printResults()`                   |
 // | Neue/andere Tätigkeit | ✓           | ✓                                     |
@@ -226,14 +227,14 @@ int newResult = performMeasurementAndProcessResult(2, 4, allResults);
 //   Abstraktionsebenen zu kontrollieren
 // - Wir können die "Um-Zu"-Absätze als Kommentare schreiben bevor wir den Code
 //   schreiben
-// - Meistens wird jeder Absatz zu einer Funktion
+// - Meistens wird jeder Kommentar zu einer Funktion
 
 // %%
 import java.util.List;
 
 // %%
 public class OrderProcessor {
-    public static void processOrder(String orderID) {
+    public void processOrder(String orderID) {
         // Hole die Bestelldetails anhand der `orderID`
         // Validiere die Lagerverfügbarkeit für jeden Artikel in der Bestellung
         // Aktualisiere den Lagerbestand bei erfolgreicher Validierung
@@ -248,16 +249,41 @@ public class OrderProcessor {
 //
 // Wir können die "Um-Zu"-Absätze auch gleich als Funktionsaufrufe schreiben:
 
-// %% [markdown]
-//
-// ```java
-// public void processUserRegistration(String username, String password, String email) {
-//     validateUserData(username, password, email);
-//     User user = createNewUser(username, password, email);
-//     sendConfirmationEmail(user);
-//     logSuccessfulRegistration(user);
-// }
-// ```
+// %%
+public class OrderProcessor {
+    public void processOrder(String orderID) {
+        // Hole die Bestelldetails anhand der `orderID`
+        fetchOrderDetails(orderID);
+        // Validiere die Lagerverfügbarkeit für jeden Artikel in der Bestellung
+        validateStockAvailability(orderID);
+        // Aktualisiere den Lagerbestand bei erfolgreicher Validierung
+        updateInventory(orderID);
+        // Erzeuge eine Lieferung für die Bestellung
+        generateShipment(orderID);
+        // Benachrichtige den Kunden mit den Lieferdetails
+        notifyCustomer(orderID);
+    }
+
+    private void fetchOrderDetails(String orderID) {
+        // ...
+    }
+
+    private void validateStockAvailability(String orderID) {
+        // ...
+    }
+
+    private void updateInventory(String orderID) {
+        // ...
+    }
+
+    private void generateShipment(String orderID) {
+        // ...
+    }
+
+    private void notifyCustomer(String orderID) {
+        // ...
+    }
+}
 
 // %% [markdown]
 //
