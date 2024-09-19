@@ -2,7 +2,7 @@
 // %% [markdown]
 //
 // <div style="text-align:center; font-size:200%;">
-//  <b>Strategien zum Finden von Tests (Teil 2)</b>
+//  <b>Zustandsbasiertes Testen</b>
 // </div>
 // <br/>
 // <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
