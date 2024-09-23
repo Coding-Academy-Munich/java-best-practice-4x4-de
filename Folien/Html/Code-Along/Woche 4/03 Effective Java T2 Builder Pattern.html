@@ -13086,7 +13086,7 @@ div#notebook {
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=560faf804e63628c"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=952d71b86d5b574f"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img alt="Java Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0
@@ -13115,7 +13115,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 " style="display:block;margin:auto;width:5%"/>
 <br/></p>
 <div style="text-align:center; font-size:200%;">
-<b>Finden von Tests: BVA und Partitionen</b>
+<b>Effective Java T2: Builder Pattern</b>
 </div>
 <br>
 <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -13125,237 +13125,80 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=25004aa0cfaffb5d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=d674d86f6882e187"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Strategien-zum-Finden-von-(guten)-Tests">Strategien zum Finden von (guten) Tests<a class="anchor-link" href="#Strategien-zum-Finden-von-(guten)-Tests">¶</a></h1><ul>
-<li>Analyse von Randwerten (Boundary Value Analysis, BVA)</li>
-<li>Partitionierung</li>
-<li>Zustandsbasiertes Testen</li>
-<li>Kontrollflussbasiertes Testen</li>
-<li>Richtlinien</li>
-<li>Kenntnis häufiger Fehler in Software</li>
-<li>(Kenntnis häufiger Probleme von Tests (Test Smells))</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9167e2ddb10e2a29"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boundary-Value-Analysis">Boundary Value Analysis<a class="anchor-link" href="#Boundary-Value-Analysis">¶</a></h2><ul>
-<li>Viele Fehler treten am "Rand" des Definitionsbereichs von Funktionen
-oder Methoden auf</li>
-<li>Eine gute Strategie zum effizienten Testen ist es daher, derartige
-Randwerte zu betrachten<ul>
-<li>Der/die letzten gültigen Werte</li>
-<li>Werte, die gerade außerhalb des Definitionsbereichs liegen</li>
-</ul>
-</li>
-<li>Ist z.B. eine Funktion für ganzzahlige Werte zwischen 0 und 5
-definiert, so kann sie mit Eingaben -1, 0, 5, 6 getestet werden</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=24ef75af5e3c488f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boundary-Value-Analysis">Boundary Value Analysis<a class="anchor-link" href="#Boundary-Value-Analysis">¶</a></h2><h3 id="Vorteil:">Vorteil:<a class="anchor-link" href="#Vorteil:">¶</a></h3><ul>
-<li>Man konzentriert sich auf empirisch häufige Fehlerquellen</li>
-</ul>
-<h3 id="Schwierigkeiten:">Schwierigkeiten:<a class="anchor-link" href="#Schwierigkeiten:">¶</a></h3><ul>
-<li>Bei vielen Bereichen ist nicht klar, was "Randwerte" sind<ul>
-<li>(Allerdings lassen sich oft alternative Kriterien finden, z.B.
-Länge von Collection-Argumenten)</li>
-</ul>
-</li>
-<li>Werte außerhalb des Definitionsbereichs können manchmal zu undefiniertem
-Verhalten führen</li>
-<li>Bei Funktionen mit vielen Parametern gibt es eine kombinatorische
-Explosion von Randwerten</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=55cbaf2c98f5ea3b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Partitionierung">Partitionierung<a class="anchor-link" href="#Partitionierung">¶</a></h2><ul>
-<li>Argumente von Funktionen, Ein/Ausgabe des Programms und Zustände
-von Klassen können oft in Äquivalenzklassen unterteilt werden, sodass…<ul>
-<li>Das Verhalten für Elemente aus der gleichen Äquivalenzklasse ähnlich
-ist (z.B. den gleichen Kontrollflusspfad nimmt)</li>
-<li>Elemente aus unterschiedlichen Klassen verschiedenes Verhalten zeigen</li>
-<li>Beispiel: Die Argumente der sqrt-Funktion können unterteilt werden in<ul>
-<li>Positive Zahlen und 0</li>
-<li>Negative Zahlen</li>
-</ul>
-</li>
-<li>Eine feinere Unterteilung wäre zusätzlich in Quadratzahlen und Nicht-Quadratzahlen</li>
-</ul>
-</li>
-<li>Eine derartige Äquivalenzklasse heißt Partition (oder Domäne)</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=81fa0f7d7d973647"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Partitionierung">Partitionierung<a class="anchor-link" href="#Partitionierung">¶</a></h2><p>Finde Partitionen für das getestete Element und teste die folgenden Elemente:</p>
-<ul>
-<li>Einen Wert aus der "Mitte" der Partition</li>
-<li>Einen Wert auf oder nahe jeder Partitionsgrenze</li>
-</ul>
-<p>Häufig findet man Partitionen durch BVA.</p>
-<p>Beispiel: Um die Quadratwurzelfunktion zu testen, schreibe Tests für:</p>
-<ul>
-<li><code>sqrt(0.0)</code></li>
-<li><code>sqrt(2.0)</code></li>
-<li><code>sqrt(-2.0)</code></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=436c53e28eab8d85"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Black-Box-vs.-White-Box-Partitionierung">Black-Box vs. White-Box Partitionierung<a class="anchor-link" href="#Black-Box-vs.-White-Box-Partitionierung">¶</a></h2><ul>
-<li>Wir können die Partitionierung sowohl als Black-Box- als auch als
-White-Box-Technik verwenden</li>
-<li>Bei der Black-Box-Partitionierung betrachten wir nur die Spezifikation
-der Funktion</li>
-<li>Bei der White-Box-Partitionierung betrachten wir auch die Implementierung
-der Funktion</li>
-<li>Die White-Box-Partitionierung kann uns helfen, Partitionen zu finden, die
-auf spezifischen Kontrollflusspfaden durch die Funktion basieren</li>
-<li>In vielen Fällen führen beide Vorgehensweisen zum gleichen Ergebnis</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=bbc9a80e2667760f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Beispiel:-Discount-Berechnung">Beispiel: Discount-Berechnung<a class="anchor-link" href="#Beispiel:-Discount-Berechnung">¶</a></h2><ul>
-<li>In einem Online-Shop haben wir eine Funktion, die den Rabatt für einen
-Einkauf berechnet</li>
-<li>Sie hat folgende Spezifikation:<ul>
-<li>Eingabe: Gesamtbetrag des Einkaufs</li>
-<li>Rückgabewert: Preis nach Abzug des Rabatts</li>
-<li>Für Einkäufe unter 50€ gibt es keinen Rabatt</li>
-<li>Der maximale Rabatt wird ab 200€ Einkaufswert gewährt und beträgt 20%</li>
-</ul>
-</li>
-<li>Welche Partitionen können wir für diese Funktion identifizieren?</li>
-<li>Wie können wir Werte aus jeder Partition testen?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=b73f47c569bda2bd"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Black-Box Partitionen:<ul>
-<li>Einkaufswert &lt; 50€</li>
-<li>50€ ≤ Einkaufswert &lt; 200€</li>
-<li>Einkaufswert ≥ 200€</li>
-</ul>
-</li>
-<li>Testfälle:<ul>
-<li>Einkaufswert = 0€</li>
-<li>Einkaufswert = 25€</li>
-<li>Einkaufswert = 49.99€</li>
-<li>Einkaufswert = 50€ (?)</li>
-<li>Einkaufswert = 100€</li>
-<li>Einkaufswert = 199.99€</li>
-<li>Einkaufswert = 200€</li>
-<li>Einkaufswert = 250€</li>
+<h3 id="Problem:-Viele-Konstruktor-Parameter">Problem: Viele Konstruktor-Parameter<a class="anchor-link" href="#Problem:-Viele-Konstruktor-Parameter">¶</a></h3><ul>
+<li>Statische Fabriken und Konstruktoren skalieren schlecht</li>
+<li>Große Anzahl von optionalen Parametern</li>
+<li>Beispiel: <code>TravelPackage</code>-Klasse<ul>
+<li>Einige erforderliche Felder</li>
+<li>Viele optionale Felder</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9b3e351e1ea449d0"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=55e85eeea04f0baa"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<table>
-<thead>
-<tr>
-<th>Einkaufswert</th>
-<th style="text-align:center">Test für den Ausgabewert y</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$0€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$25€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$49.99€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$50€$</td>
-<td style="text-align:center">$0€ \leq y &lt; 50€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$100€$</td>
-<td style="text-align:center">$0€ &lt; y &lt; 100€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$199.99€$</td>
-<td style="text-align:center">$0€ &lt; y &lt; 199.99€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$200€$</td>
-<td style="text-align:center">$y = 200€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$250€$</td>
-<td style="text-align:center">$y = 250€ \cdot 20\%$</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=85498206c550e247"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Hier ist jetzt die konkrete Implementierung der Funktion.</li>
+<h3 id="L%C3%B6sung-1:-Teleskopierender-Konstruktor">Lösung 1: Teleskopierender Konstruktor<a class="anchor-link" href="#L%C3%B6sung-1:-Teleskopierender-Konstruktor">¶</a></h3><ul>
+<li>Muster: Untere Konstruktoren rufen obere Konstruktoren auf</li>
+<li>Vorteil: Sicherstellung der Konsistenz</li>
+<li>Nachteil: Schlechte Lesbarkeit und Wartbarkeit</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=765fb12e13dfd658">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ba54127b022848a5">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DiscountCalculator</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateDiscount</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Purchase amount cannot be negative"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TravelPackage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">;</span><span class="w">  </span><span class="c1">// required</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span><span class="w">        </span><span class="c1">// required</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="p">;</span><span class="c1">// optional</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="p">;</span><span class="c1">// optional</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">meals</span><span class="p">;</span><span class="w">       </span><span class="c1">// optional</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">insurance</span><span class="p">;</span><span class="w">   </span><span class="c1">// optional</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="s">"Standard Hotel"</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">accommodation</span><span class="p">,</span><span class="w"> </span><span class="s">"Flight"</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">accommodation</span><span class="p">,</span><span class="w"> </span><span class="n">transportation</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">meals</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">accommodation</span><span class="p">,</span><span class="w"> </span><span class="n">transportation</span><span class="p">,</span><span class="w"> </span><span class="n">meals</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">meals</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">insurance</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">destination</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">accommodation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accommodation</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">transportation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transportation</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">meals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meals</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">insurance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insurance</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"TravelPackage{"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">"destination='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">destination</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", duration="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", accommodation='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", transportation='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", meals="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", insurance="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13363,99 +13206,71 @@ Einkauf berechnet</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9de3c1901236e59d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=7aeff352e5865109">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">TravelPackage</span><span class="w"> </span><span class="n">europeanTour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TravelPackage</span><span class="p">(</span><span class="s">"Europe"</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="s">"Standard Hotel"</span><span class="p">,</span><span class="w"> </span><span class="s">"Flight"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=faf91a512c984249">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">europeanTour</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=a4d2f79c8eb30d94"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>White-Box Partitionen:<ul>
-<li>Einkaufswert &lt; 0€</li>
-<li>0€ ≤ Einkaufswert &lt; 50€</li>
-<li>50€ ≤ Einkaufswert &lt; 100€</li>
-<li>100€ ≤ Einkaufswert &lt; 200€</li>
-<li>200€ ≤ Einkaufswert &lt; 500€ (Maximaler Rabatt von 100€)</li>
-<li>Einkaufswert ≥ 500€</li>
-</ul>
-</li>
+<h3 id="L%C3%B6sung-2:-JavaBeans-Pattern">Lösung 2: JavaBeans Pattern<a class="anchor-link" href="#L%C3%B6sung-2:-JavaBeans-Pattern">¶</a></h3><ul>
+<li>Parametelloser Konstruktor und Setter-Methoden</li>
+<li>Vorteil: Leichter zu lesen und zu schreiben</li>
+<li>Nachteil: Keine Konsistenz, erzwingt Mutabilität</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=83e51a02b9df2ac1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=144ca308065767a7">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">params</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=dd5fc93bfd5a2e7c">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.provider.ValueSource</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TravelPackage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">;</span><span class="w">   </span><span class="c1">// Required; no default value</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span><span class="w">         </span><span class="c1">// Required; no default value</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Standard Hotel"</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Flight"</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
 
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=9e34aa251c4f4aa1">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d9a79fc77081dd9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ae6065291bf016c8">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">DiscountCalculatorBlackBoxTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mf">49.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionBelow50</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mf">199.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition50to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setDestination</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="n">destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setDuration</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w">           </span><span class="p">{</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setAccommodation</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setTransportation</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setMeals</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setInsurance</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"TravelPackage{"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">"destination='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">destination</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", duration="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", accommodation='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", transportation='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", meals="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", insurance="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13463,120 +13278,101 @@ Einkauf berechnet</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=3872f8ab5b679158">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=53859196a3752bad">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">DiscountCalculatorBlackBoxTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">TravelPackage</span><span class="w"> </span><span class="n">europeanTour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TravelPackage</span><span class="p">();</span>
+<span class="n">europeanTour</span><span class="p">.</span><span class="na">setDestination</span><span class="p">(</span><span class="s">"Europe"</span><span class="p">);</span>
+<span class="n">europeanTour</span><span class="p">.</span><span class="na">setDuration</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span>
+<span class="n">europeanTour</span><span class="p">.</span><span class="na">setInsurance</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=98ce335cc02acf5b">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=da8e1f45b73124ed">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">DiscountCalculatorWhiteBoxTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1000</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testNegativePurchaseAmount</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertThrows</span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mf">49.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionBelow50</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">75</span><span class="p">,</span><span class="w"> </span><span class="mf">99.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition50to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w"> </span><span class="mf">199.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition100to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w"> </span><span class="mf">499.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">10000</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove500</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">europeanTour</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2640b16ad381d07c">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">DiscountCalculatorWhiteBoxTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=1ee79fc856c3f32e"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=31c9255ebe4419ee"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Workshop:-Partitionierung">Workshop: Partitionierung<a class="anchor-link" href="#Workshop:-Partitionierung">¶</a></h2><p>In diesem Workshop werden wir die gelernten Techniken auf eine einfache
-Funktion anwenden. Wir werden eine Funktion <code>validateAndFormatPhoneNumber</code>
-implementieren und testen.</p>
-<p>Die Funktion soll eine US-Amerikanische Telefonnummer validieren und im
-Format <code>(XXX) XXX-XXXX</code> zurückgeben.</p>
-<ul>
-<li>Die Telefonnummer darf nicht <code>null</code> oder leer sein, sonst wird eine
-<code>IllegalArgumentException</code> geworfen.</li>
-<li>Die Telefonnummer besteht aus 10 oder 11 Ziffern.</li>
-<li>Bei 11 Ziffern muss die Telefonnummer mit einer <code>1</code> beginnen.</li>
-<li>Wenn eine Telefonnummer weniger als 10 oder mehr als 11 Ziffern hat, wird
-eine <code>IllegalArgumentException</code> geworfen.</li>
+<h3 id="L%C3%B6sung-3:-Builder-Pattern">Lösung 3: Builder Pattern<a class="anchor-link" href="#L%C3%B6sung-3:-Builder-Pattern">¶</a></h3><ul>
+<li>Kombination von Sicherheit und Lesbarkeit</li>
+<li>Erstellt ein Builder-Objekt, das die optionalen Parameter setzt</li>
+<li>Führt eine <code>build</code>-Methode auf, um das finale Objekt zu erzeugen</li>
+<li>Das erzeugte Objekt ist immutable</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=40bac68de7b48b1b">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=3ecd9663449863e9">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PhoneNumberFormatter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">validateAndFormatPhoneNumber</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">phoneNumber</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Phone number cannot be null or empty"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TravelPackage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">meals</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">insurance</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Builder</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Required parameters</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Optional parameters - initialized to default values</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Standard Hotel"</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Flight"</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="nf">Builder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">duration</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">destination</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
 <span class="w">        </span><span class="p">}</span>
 
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">digitsOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">"\\D"</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">accommodation</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">transportation</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">meals</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">insurance</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Phone number must have 10 or 11 digits"</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">TravelPackage</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TravelPackage</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 <span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">"1"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"11-digit numbers must start with 1"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">TravelPackage</span><span class="p">(</span><span class="n">Builder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">destination</span><span class="p">;</span>
+<span class="w">        </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">duration</span><span class="p">;</span>
+<span class="w">        </span><span class="n">accommodation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">accommodation</span><span class="p">;</span>
+<span class="w">        </span><span class="n">transportation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">transportation</span><span class="p">;</span>
+<span class="w">        </span><span class="n">meals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">meals</span><span class="p">;</span>
+<span class="w">        </span><span class="n">insurance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">insurance</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">areaCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">firstPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">secondPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
-
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"(%s) %s-%s"</span><span class="p">,</span><span class="w"> </span><span class="n">areaCode</span><span class="p">,</span><span class="w"> </span><span class="n">firstPart</span><span class="p">,</span><span class="w"> </span><span class="n">secondPart</span><span class="p">);</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"TravelPackage{"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">"destination='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">destination</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", duration="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", accommodation='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accommodation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", transportation='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">transportation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", meals="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">meals</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", insurance="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insurance</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13584,103 +13380,153 @@ eine <code>IllegalArgumentException</code> geworfen.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=8f69dc0d54091e8f">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=c222b1efb1f153c4">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">PhoneNumberFormatter</span><span class="p">.</span><span class="na">validateAndFormatPhoneNumber</span><span class="p">(</span><span class="s">"1234567890"</span><span class="p">)</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">TravelPackage</span><span class="w"> </span><span class="n">europeanTour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TravelPackage</span><span class="p">.</span><span class="na">Builder</span><span class="p">(</span><span class="s">"Europe"</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">accommodation</span><span class="p">(</span><span class="s">"4-star Hotel"</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">transportation</span><span class="p">(</span><span class="s">"Train"</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">meals</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">insurance</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=adabada67f8d9f70">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=b75b8fbf950efaa7">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">params</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">europeanTour</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9f88a57bc21839c9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.provider.MethodSource</span><span class="p">;</span>
-
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=033ea9be952834ee">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f6a456547acf1c8a">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=40e400e454c56af4"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=a6ca712cdc53e13f"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Identifizieren Sie Äquivalenzklassen für die Eingaben der Funktion.</li>
-<li>Implementieren Sie Testfälle für jede Partition.</li>
-<li>Welche Black-Box-Partitionen können Sie identifizieren?</li>
-<li>Welche White-Box-Partitionen können Sie identifizieren?</li>
+<h3 id="Builder-Pattern:-Vorteile">Builder Pattern: Vorteile<a class="anchor-link" href="#Builder-Pattern:-Vorteile">¶</a></h3><ul>
+<li>Immutable Objekte</li>
+<li>Leichte Lesbarkeit und Wartbarkeit</li>
+<li>Named optional parameters</li>
+<li>Mögliche Konsistenz-Checks</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_start celltag_subslide" id="cell-id=c2130d09c4993dcd">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=d7c1a4f4f9d24dd4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Builder-Pattern:-Nachteile">Builder Pattern: Nachteile<a class="anchor-link" href="#Builder-Pattern:-Nachteile">¶</a></h3><ul>
+<li>Mehr Code</li>
+<li>Mangelnde Vertrautheit</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=271b86885dd26d81"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Zusammenfassung">Zusammenfassung<a class="anchor-link" href="#Zusammenfassung">¶</a></h3><ul>
+<li>Builder Pattern ideal für viele Konstruktor-Parameter</li>
+<li>Vereint die Vorteile des teleskopierenden Konstruktors und des JavaBeans
+Patterns</li>
+<li>Leicht lesbar, leicht wartbar, sicher</li>
+<li>Möglich für Klassenhierarchien</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=667159032bd7c537"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Workshop:-Sandwich-Builder">Workshop: Sandwich-Builder<a class="anchor-link" href="#Workshop:-Sandwich-Builder">¶</a></h2><ul>
+<li>Implementieren Sie ein System zur Erstellung von Sandwiches</li>
+<li>Verwenden Sie das Builder-Pattern</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=cd1bb5e2b4774390"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Gegebene-Klasse">Gegebene Klasse<a class="anchor-link" href="#Gegebene-Klasse">¶</a></h3><ul>
+<li><code>Sandwich</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=70ea9b1f311db849">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">PhoneNumberFormatterTest</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
 
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testImportsWork</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Sandwich</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">bread</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">proteins</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cheeses</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vegetables</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sauces</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">toasted</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Sandwich</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">bread</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">proteins</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cheeses</span><span class="p">,</span>
+<span class="w">             </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vegetables</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sauces</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">toasted</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">bread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bread</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">proteins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">proteins</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">cheeses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cheeses</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">vegetables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vegetables</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">sauces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sauces</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">toasted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toasted</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="c1">// TODO: Add more test cases here</span>
-
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Sandwich{"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">"bread='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bread</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", proteins="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">proteins</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", cheeses="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cheeses</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", vegetables="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vegetables</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", sauces="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sauces</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", toasted="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">toasted</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=c210d4e1713f171c">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=b85a1929a82c068d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Aufgaben">Aufgaben<a class="anchor-link" href="#Aufgaben">¶</a></h3><ol>
+<li>Implementieren Sie eine <code>SandwichBuilder</code>-Klasse</li>
+<li>Testen Sie Ihre Implementierung</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=32c5b395634127b5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-1:-SandwichBuilder">Aufgabe 1: <code>SandwichBuilder</code><a class="anchor-link" href="#Aufgabe-1:-SandwichBuilder">¶</a></h4><ul>
+<li>Implementieren Sie die <code>SandwichBuilder</code>-Klasse</li>
+<li>Fügen Sie Methoden hinzu, um alle Eigenschaften des Sandwiches zu setzen</li>
+<li>Implementieren Sie eine <code>build()</code>-Methode, die ein <code>Sandwich</code>-Objekt
+zurückgibt</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=a1464135600f7661">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13691,7 +13537,234 @@ eine <code>IllegalArgumentException</code> geworfen.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=6b4e03423667dbb7">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=6f6e9fd725ebcf95"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-2:-Testen-Sie-Ihre-Implementierung">Aufgabe 2: Testen Sie Ihre Implementierung<a class="anchor-link" href="#Aufgabe-2:-Testen-Sie-Ihre-Implementierung">¶</a></h4><ul>
+<li>Erstellen Sie eine Instanz der <code>SandwichBuilder</code>-Klasse</li>
+<li>Erstellen Sie verschiedene <code>Sandwich</code>-Objekte mithilfe des Builders</li>
+<li>Stellen Sie sicher, dass die erstellten <code>Sandwich</code>-Objekte korrekt
+initialisiert sind</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=214856f8d6eec54d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=bbcfd69f290706a2">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=02a37161aec01aee">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=b8c9fa31d753dbec">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=9087afd97d5ae5fd"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Bonusaufgabe">Bonusaufgabe<a class="anchor-link" href="#Bonusaufgabe">¶</a></h3><ul>
+<li>Fügen Sie eine Methode <code>calories()</code> zur <code>Sandwich</code>-Klasse hinzu, die die
+Gesamtkalorien des Sandwiches berechnet</li>
+<li>Erweitern Sie den <code>SandwichBuilder</code> um eine Methode <code>maxCalories(int max)</code>,
+die verhindert, dass ein Sandwich mit mehr als <code>max</code> Kalorien erstellt wird</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=d14273bc9100213c">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Sandwich</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">bread</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">proteins</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cheeses</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vegetables</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sauces</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">toasted</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Calorie information for ingredients (simplified)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CALORIE_MAP</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"White"</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Whole Wheat"</span><span class="p">,</span><span class="w"> </span><span class="mi">70</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Sourdough"</span><span class="p">,</span><span class="w"> </span><span class="mi">90</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Turkey"</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Bacon"</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Ham"</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Swiss"</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Cheddar"</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Lettuce"</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Tomato"</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Cucumber"</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Mayo"</span><span class="p">,</span><span class="w"> </span><span class="mi">90</span><span class="p">);</span>
+<span class="w">        </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Mustard"</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Sandwich</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">bread</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">proteins</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cheeses</span><span class="p">,</span>
+<span class="w">             </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vegetables</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sauces</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">toasted</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">bread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bread</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">proteins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">proteins</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">cheeses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cheeses</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">vegetables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vegetables</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">sauces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sauces</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">toasted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toasted</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">calories</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">bread</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">proteins</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="na">sum</span><span class="p">();</span>
+<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">cheeses</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="na">sum</span><span class="p">();</span>
+<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">vegetables</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="na">sum</span><span class="p">();</span>
+<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sauces</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">CALORIE_MAP</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="na">sum</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Sandwich{"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">"bread='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bread</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", proteins="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">proteins</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", cheeses="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cheeses</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", vegetables="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vegetables</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", sauces="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sauces</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", toasted="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">toasted</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", calories="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">calories</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2d0be89eca638d91">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SandwichBuilder</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">bread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"White"</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">proteins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cheeses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vegetables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sauces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">toasted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxCalories</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">bread</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">bread</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">bread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bread</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">addProtein</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">protein</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">proteins</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">protein</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">addCheese</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">cheese</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">cheeses</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">cheese</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">addVegetable</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">vegetable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">vegetables</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">vegetable</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">addSauce</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">sauce</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">sauces</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">sauce</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">setToasted</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">toasted</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">toasted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toasted</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SandwichBuilder</span><span class="w"> </span><span class="nf">maxCalories</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">max</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">maxCalories</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Sandwich</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Sandwich</span><span class="w"> </span><span class="n">sandwich</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Sandwich</span><span class="p">(</span><span class="n">bread</span><span class="p">,</span><span class="w"> </span><span class="n">proteins</span><span class="p">,</span><span class="w"> </span><span class="n">cheeses</span><span class="p">,</span><span class="w"> </span><span class="n">vegetables</span><span class="p">,</span><span class="w"> </span><span class="n">sauces</span><span class="p">,</span><span class="w"> </span><span class="n">toasted</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sandwich</span><span class="p">.</span><span class="na">calories</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">maxCalories</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">"Sandwich exceeds maximum calorie limit"</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">sandwich</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=45b82c7f5de51995">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=83c0734f0fa248d6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=e4ee52da8d28cc3f">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">

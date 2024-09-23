@@ -13265,12 +13265,12 @@ Sequence)</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=8d49bf3ac17d825d">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=8d49bf3ac17d825d">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
+<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">TrafficLightTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -13338,12 +13338,12 @@ Sequence)</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=ef24c899890a719e">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ef24c899890a719e">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
+<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">TrafficLightTest2</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -13468,12 +13468,12 @@ Sequence)</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=4c6c34177525674e">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=4c6c34177525674e">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
+<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">TrafficLightTest3</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -13505,7 +13505,7 @@ ausgeführt werden, für die keine Transition angegeben ist.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d0a31f52c205bb2">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=0d0a31f52c205bb2">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13625,161 +13625,12 @@ ausgeführt werden, für die keine Transition angegeben ist.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5cd221b528767ad1">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=5cd221b528767ad1">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">CoffeeMachineTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">CoffeeMachine</span><span class="w"> </span><span class="n">machine</span><span class="p">;</span>
-
-<span class="w">    </span><span class="nd">@BeforeEach</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setUp</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CoffeeMachine</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testInitialState</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@MethodSource</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">transitionsFromOff</span><span class="p">(</span><span class="n">TransitionTestCase</span><span class="w"> </span><span class="n">testCase</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-
-<span class="w">        </span><span class="n">testCase</span><span class="p">.</span><span class="na">action</span><span class="p">.</span><span class="na">accept</span><span class="p">(</span><span class="n">machine</span><span class="p">);</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">testCase</span><span class="p">.</span><span class="na">expectedState</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">TransitionTestCase</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">transitionsFromOff</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"OFF -- turnOn --&gt; READY"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOn</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">READY</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"OFF -- turnOff --&gt; OFF"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOff</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"OFF -- brew --&gt; OFF"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">brew</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"OFF -- startMaintenance --&gt; OFF"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">startMaintenance</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"OFF -- finishMaintenance --&gt; OFF"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">finishMaintenance</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span>
-<span class="w">            </span><span class="p">)</span>
-<span class="w">        </span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@MethodSource</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">transitionsFromReady</span><span class="p">(</span><span class="n">TransitionTestCase</span><span class="w"> </span><span class="n">testCase</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOn</span><span class="p">();</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">READY</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-
-<span class="w">        </span><span class="n">testCase</span><span class="p">.</span><span class="na">action</span><span class="p">.</span><span class="na">accept</span><span class="p">(</span><span class="n">machine</span><span class="p">);</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">testCase</span><span class="p">.</span><span class="na">expectedState</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">TransitionTestCase</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">transitionsFromReady</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"READY -- turnOn --&gt; READY"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOn</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">READY</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"READY -- turnOff --&gt; OFF"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOff</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"READY -- brew --&gt; READY"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">brew</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">READY</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"READY -- startMaintenance --&gt; MAINTENANCE"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">startMaintenance</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">MAINTENANCE</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"READY -- finishMaintenance --&gt; READY"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">finishMaintenance</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">READY</span>
-<span class="w">            </span><span class="p">)</span>
-<span class="w">        </span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@MethodSource</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">transitionsFromMaintenance</span><span class="p">(</span><span class="n">TransitionTestCase</span><span class="w"> </span><span class="n">testCase</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOn</span><span class="p">();</span>
-<span class="w">        </span><span class="n">machine</span><span class="p">.</span><span class="na">startMaintenance</span><span class="p">();</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">MAINTENANCE</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-
-<span class="w">        </span><span class="n">testCase</span><span class="p">.</span><span class="na">action</span><span class="p">.</span><span class="na">accept</span><span class="p">(</span><span class="n">machine</span><span class="p">);</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">testCase</span><span class="p">.</span><span class="na">expectedState</span><span class="p">,</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">getState</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">TransitionTestCase</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">transitionsFromMaintenance</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"MAINTENANCE -- turnOn --&gt; MAINTENANCE"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOn</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">MAINTENANCE</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"MAINTENANCE -- turnOff --&gt; OFF"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">turnOff</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">OFF</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"MAINTENANCE -- brew --&gt; MAINTENANCE"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">brew</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">MAINTENANCE</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"MAINTENANCE -- startMaintenance --&gt; MAINTENANCE"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">startMaintenance</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">MAINTENANCE</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">TransitionTestCase</span><span class="p">(</span>
-<span class="w">                </span><span class="s">"MAINTENANCE -- finishMaintenance --&gt; READY"</span><span class="p">,</span>
-<span class="w">                </span><span class="n">machine</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">.</span><span class="na">finishMaintenance</span><span class="p">(),</span>
-<span class="w">                </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">READY</span>
-<span class="w">            </span><span class="p">)</span>
-<span class="w">        </span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TransitionTestCase</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">;</span>
-<span class="w">        </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">function</span><span class="p">.</span><span class="na">Consumer</span><span class="o">&lt;</span><span class="n">CoffeeMachine</span><span class="o">&gt;</span><span class="w"> </span><span class="n">action</span><span class="p">;</span>
-<span class="w">        </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="w"> </span><span class="n">expectedState</span><span class="p">;</span>
-
-<span class="w">        </span><span class="n">TransitionTestCase</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">Consumer</span><span class="o">&lt;</span><span class="n">CoffeeMachine</span><span class="o">&gt;</span><span class="w"> </span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">CoffeeMachine</span><span class="p">.</span><span class="na">State</span><span class="w"> </span><span class="n">expectedState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">description</span><span class="p">;</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">action</span><span class="p">;</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">expectedState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expectedState</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="nd">@Override</span>
-<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">description</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight hl-java"><pre><span></span>
 </pre></div>
 </div>
 </div>

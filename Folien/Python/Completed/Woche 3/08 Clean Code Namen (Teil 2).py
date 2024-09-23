@@ -42,7 +42,6 @@ int d = 0;
 // %%
 int elapsedTimeInDays = 0;
 
-
 // %% [markdown]
 //
 // ## Kommuniziere Intention
@@ -62,19 +61,18 @@ List<Integer> dpmLst = new ArrayList<>(List.of(31, 28, 31, 30, 31, 30, 31, 31, 3
 // %%
 List<Integer> daysPerMonth = new ArrayList<>(List.of(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31));
 
-
 // %% [markdown]
 //
 // ## Aussprechbare Namen
 //
-// Sind oft auch besser zu suchen
+// - Ermöglichen einfache Kommunikation
+// - Sind oft auch besser zu suchen
 
 // %%
 List<Integer> hwCrsrPxy = new ArrayList<>(List.of(0, 0));
 
 // %%
 List<Integer> hardwareCursorPosition = new ArrayList<>(List.of(0, 0));
-
 
 // %% [markdown]
 //
@@ -91,7 +89,7 @@ int addElements(List<Integer> lst) {
 }
 
 // %%
-addElements(List.of(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)); // Seems reasonable
+addElements(daysPerMonth); // Seems reasonable
 
 
 // %%
@@ -101,7 +99,6 @@ int computeYearlySalary(List<Integer> monthlySalaries) {
 
 // %%
 computeYearlySalary(daysPerMonth); // WHAT?!?
-
 
 // %% [markdown]
 //
@@ -120,20 +117,24 @@ int i_month = 3;
 // Verwende keine Präfixe für Attribute:
 
 // %%
-public class Point {
-    public int m_X;
-    public int m_Y;
-}
-
-
-// %%
 public class MyClass {
     public int m_Days;
     public int m_months;
 
     public MyClass(int days, int months) {
-        this.m_Days = days;
-        this.m_months = months;
+        m_Days = days;
+        m_months = months;
+    }
+}
+
+// %%
+public class MyClass {
+    public int days;
+    public int months;
+
+    public MyClass(int days, int months) {
+        this.days = days;
+        this.months = months;
     }
 }
 
@@ -144,36 +145,15 @@ public class MyClass {
 // Vermeiden Sie Präfixe wie C/I: CClass, IInterface
 
 // %%
-public class CMyClass {
-    public int days;
-    public int months;
-
-    public CMyClass(int d, int m) {
-        days = d;
-        months = m;
-    }
+public interface MyInterface {
+    void sayHello();
 }
 
-// %% [markdown]
-//
-// **In Java ist es üblich, Interfaces ohne ein `I` zu beginnen.**
-
 // %%
-import java.util.Iterator;
-import java.util.stream.IntStream;
-
-
-// %%
-class DigitIterator implements Iterable<Integer> {
-    public Iterator<Integer> iterator() {
-        return IntStream.rangeClosed(1, 10).iterator();
+public class MyClass implements MyInterface {
+    public void sayHello() {
+        System.out.println("Hello");
     }
-}
-
-
-// %%
-for (int i : new DigitIterator()) {
-    System.out.print(i + " ");
 }
 
 // %% [markdown]
@@ -196,6 +176,9 @@ public class GoToTheServer {
     }
 }
 
+// %%
+GoToTheServer server = new GoToTheServer();
+server.connection();
 
 // %%
 public class ServerConnection {
@@ -212,92 +195,18 @@ public class ServerConnection {
 //
 // ## Vermeide Füllwörter
 //
-// Vermeide Wörter, die keine Bedeutung haben, wie Manager, Processor, Data,
-// Info
+// Vermeide Wörter, die keine Bedeutung haben, wie Data, Info
 
 // %%
-class ObjectManager {
+class ProductObject {
 }
-
-// %% [markdown]
-//
-// ## Java-Spezifisch
-//
-// Verwende Getter/Setter für Zugriff auf Attribute:
-
-// %%
-public class MyBox {
-    private int x;
-
-    public MyBox(int x) {
-        this.x = x;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int newX) {
-        this.x = newX;
-    }
-}
-
-
-// %%
-MyBox myBox = new MyBox(1);
-myBox.getX()
-
-
-// %%
-myBox.setX(200);
-myBox.getX()
-
-
-// %% [markdown]
-//
-// Mit Gettern und Settern kann kontrollierter oder berechneter Zugriff
-// auf Attribute implementiert werden:
-
-// %%
-public class ControlledBox {
-    private double x;
-
-    public ControlledBox(double x) {
-        setX(x); // Uses the setter for initialization
-    }
-
-    public double getX() {
-        return x + 1;
-    }
-
-    public void setX(double value) {
-        this.x = value / 2;
-    }
-}
-
-// %%
-ControlledBox yourBox = new ControlledBox(1);
-yourBox.getX()
-
-// %%
-yourBox.setX(200);
-yourBox.getX()
-
-// %%
-new ControlledBox(510).getX()
 
 // %% [markdown]
 //
 // ## Regeln für Umfang und Länge (Scope-Length Rules)
 //
-// - Variablen:
-//   - Langer Geltungsbereich = langer Name
-//   - Kurzer Geltungsbereich = kurzer Name
-// - Klassen und Methoden
-//   - Langer Geltungsbereich = kurzer Name (wenn häufig verwendet?)
-//   - Kurzer Geltungsbereich = langer Name (wenn selten verwendet?)
-//
-// **Oder:** Verwende lange Namen für lange Geltungsbereiche
+// - Verwenden Sie lange Namen für lange Scopes, kurze Namen für kurze Scopes
+// - Verwenden Sie kurze Namen für sehr häufig verwendete Klassen und Methoden
 
 // %%
 class FixedSizeOrderedCollectionIndexedByInts {

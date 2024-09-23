@@ -341,18 +341,6 @@ import static testrunner.TestRunner.runTests;
 
 // %%
 class PhoneNumberFormatterTest {
-
-    @Test
-    void testImportsWork() {
-        assertTrue(true);
-    }
-
-    // TODO: Add more test cases here
-
-}
-
-// %%
-class PhoneNumberFormatterTest {
     // Black-box partitioning tests
     @Test
     void testValidTenDigitNumber() {

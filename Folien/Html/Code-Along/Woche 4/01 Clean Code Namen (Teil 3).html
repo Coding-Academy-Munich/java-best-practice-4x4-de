@@ -13086,7 +13086,7 @@ div#notebook {
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=560faf804e63628c"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=8608b76b8f5c2adb"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img alt="Java Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0
@@ -13115,7 +13115,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 " style="display:block;margin:auto;width:5%"/>
 <br/></p>
 <div style="text-align:center; font-size:200%;">
-<b>Finden von Tests: BVA und Partitionen</b>
+<b>Clean Code: Namen (Teil 3)</b>
 </div>
 <br>
 <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -13125,237 +13125,68 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=25004aa0cfaffb5d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=cefd254d6d449867"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Strategien-zum-Finden-von-(guten)-Tests">Strategien zum Finden von (guten) Tests<a class="anchor-link" href="#Strategien-zum-Finden-von-(guten)-Tests">¶</a></h1><ul>
-<li>Analyse von Randwerten (Boundary Value Analysis, BVA)</li>
-<li>Partitionierung</li>
-<li>Zustandsbasiertes Testen</li>
-<li>Kontrollflussbasiertes Testen</li>
-<li>Richtlinien</li>
-<li>Kenntnis häufiger Fehler in Software</li>
-<li>(Kenntnis häufiger Probleme von Tests (Test Smells))</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9167e2ddb10e2a29"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boundary-Value-Analysis">Boundary Value Analysis<a class="anchor-link" href="#Boundary-Value-Analysis">¶</a></h2><ul>
-<li>Viele Fehler treten am "Rand" des Definitionsbereichs von Funktionen
-oder Methoden auf</li>
-<li>Eine gute Strategie zum effizienten Testen ist es daher, derartige
-Randwerte zu betrachten<ul>
-<li>Der/die letzten gültigen Werte</li>
-<li>Werte, die gerade außerhalb des Definitionsbereichs liegen</li>
-</ul>
-</li>
-<li>Ist z.B. eine Funktion für ganzzahlige Werte zwischen 0 und 5
-definiert, so kann sie mit Eingaben -1, 0, 5, 6 getestet werden</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=24ef75af5e3c488f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boundary-Value-Analysis">Boundary Value Analysis<a class="anchor-link" href="#Boundary-Value-Analysis">¶</a></h2><h3 id="Vorteil:">Vorteil:<a class="anchor-link" href="#Vorteil:">¶</a></h3><ul>
-<li>Man konzentriert sich auf empirisch häufige Fehlerquellen</li>
-</ul>
-<h3 id="Schwierigkeiten:">Schwierigkeiten:<a class="anchor-link" href="#Schwierigkeiten:">¶</a></h3><ul>
-<li>Bei vielen Bereichen ist nicht klar, was "Randwerte" sind<ul>
-<li>(Allerdings lassen sich oft alternative Kriterien finden, z.B.
-Länge von Collection-Argumenten)</li>
-</ul>
-</li>
-<li>Werte außerhalb des Definitionsbereichs können manchmal zu undefiniertem
-Verhalten führen</li>
-<li>Bei Funktionen mit vielen Parametern gibt es eine kombinatorische
-Explosion von Randwerten</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=55cbaf2c98f5ea3b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Partitionierung">Partitionierung<a class="anchor-link" href="#Partitionierung">¶</a></h2><ul>
-<li>Argumente von Funktionen, Ein/Ausgabe des Programms und Zustände
-von Klassen können oft in Äquivalenzklassen unterteilt werden, sodass…<ul>
-<li>Das Verhalten für Elemente aus der gleichen Äquivalenzklasse ähnlich
-ist (z.B. den gleichen Kontrollflusspfad nimmt)</li>
-<li>Elemente aus unterschiedlichen Klassen verschiedenes Verhalten zeigen</li>
-<li>Beispiel: Die Argumente der sqrt-Funktion können unterteilt werden in<ul>
-<li>Positive Zahlen und 0</li>
-<li>Negative Zahlen</li>
-</ul>
-</li>
-<li>Eine feinere Unterteilung wäre zusätzlich in Quadratzahlen und Nicht-Quadratzahlen</li>
-</ul>
-</li>
-<li>Eine derartige Äquivalenzklasse heißt Partition (oder Domäne)</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=81fa0f7d7d973647"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Partitionierung">Partitionierung<a class="anchor-link" href="#Partitionierung">¶</a></h2><p>Finde Partitionen für das getestete Element und teste die folgenden Elemente:</p>
-<ul>
-<li>Einen Wert aus der "Mitte" der Partition</li>
-<li>Einen Wert auf oder nahe jeder Partitionsgrenze</li>
-</ul>
-<p>Häufig findet man Partitionen durch BVA.</p>
-<p>Beispiel: Um die Quadratwurzelfunktion zu testen, schreibe Tests für:</p>
-<ul>
-<li><code>sqrt(0.0)</code></li>
-<li><code>sqrt(2.0)</code></li>
-<li><code>sqrt(-2.0)</code></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=436c53e28eab8d85"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Black-Box-vs.-White-Box-Partitionierung">Black-Box vs. White-Box Partitionierung<a class="anchor-link" href="#Black-Box-vs.-White-Box-Partitionierung">¶</a></h2><ul>
-<li>Wir können die Partitionierung sowohl als Black-Box- als auch als
-White-Box-Technik verwenden</li>
-<li>Bei der Black-Box-Partitionierung betrachten wir nur die Spezifikation
-der Funktion</li>
-<li>Bei der White-Box-Partitionierung betrachten wir auch die Implementierung
-der Funktion</li>
-<li>Die White-Box-Partitionierung kann uns helfen, Partitionen zu finden, die
-auf spezifischen Kontrollflusspfaden durch die Funktion basieren</li>
-<li>In vielen Fällen führen beide Vorgehensweisen zum gleichen Ergebnis</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=bbc9a80e2667760f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Beispiel:-Discount-Berechnung">Beispiel: Discount-Berechnung<a class="anchor-link" href="#Beispiel:-Discount-Berechnung">¶</a></h2><ul>
-<li>In einem Online-Shop haben wir eine Funktion, die den Rabatt für einen
-Einkauf berechnet</li>
-<li>Sie hat folgende Spezifikation:<ul>
-<li>Eingabe: Gesamtbetrag des Einkaufs</li>
-<li>Rückgabewert: Preis nach Abzug des Rabatts</li>
-<li>Für Einkäufe unter 50€ gibt es keinen Rabatt</li>
-<li>Der maximale Rabatt wird ab 200€ Einkaufswert gewährt und beträgt 20%</li>
-</ul>
-</li>
-<li>Welche Partitionen können wir für diese Funktion identifizieren?</li>
-<li>Wie können wir Werte aus jeder Partition testen?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=b73f47c569bda2bd"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Black-Box Partitionen:<ul>
-<li>Einkaufswert &lt; 50€</li>
-<li>50€ ≤ Einkaufswert &lt; 200€</li>
-<li>Einkaufswert ≥ 200€</li>
-</ul>
-</li>
-<li>Testfälle:<ul>
-<li>Einkaufswert = 0€</li>
-<li>Einkaufswert = 25€</li>
-<li>Einkaufswert = 49.99€</li>
-<li>Einkaufswert = 50€ (?)</li>
-<li>Einkaufswert = 100€</li>
-<li>Einkaufswert = 199.99€</li>
-<li>Einkaufswert = 200€</li>
-<li>Einkaufswert = 250€</li>
+<h2 id="Desinformation-und-sinnvolle-Unterscheidungen">Desinformation und sinnvolle Unterscheidungen<a class="anchor-link" href="#Desinformation-und-sinnvolle-Unterscheidungen">¶</a></h2><ul>
+<li>Namen bedeuten etwas</li>
+<li>Desinformation:<ul>
+<li>Die Bedeutung des Namens impliziert etwas anderes als der Programmcode:</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9b3e351e1ea449d0"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<table>
-<thead>
-<tr>
-<th>Einkaufswert</th>
-<th style="text-align:center">Test für den Ausgabewert y</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$0€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$25€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$49.99€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$50€$</td>
-<td style="text-align:center">$0€ \leq y &lt; 50€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$100€$</td>
-<td style="text-align:center">$0€ &lt; y &lt; 100€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$199.99€$</td>
-<td style="text-align:center">$0€ &lt; y &lt; 199.99€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$200€$</td>
-<td style="text-align:center">$y = 200€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$250€$</td>
-<td style="text-align:center">$y = 250€ \cdot 20\%$</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=85498206c550e247"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Hier ist jetzt die konkrete Implementierung der Funktion.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=765fb12e13dfd658">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=143a588b58f3633f">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DiscountCalculator</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateDiscount</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Purchase amount cannot be negative"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<div class="highlight hl-java"><pre><span></span><span class="kt">boolean</span><span class="w"> </span><span class="n">verifyConfiguration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=84e73ccab1d370c6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">verifyConfiguration</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Deleting configuration files..."</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=423e320c27d89713">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Objects</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_start" id="cell-id=ec3b13c584fe45a6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">Pair</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">first</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">second</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">third</span><span class="p">;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Pair</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">second</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">third</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">second</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">third</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">third</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13363,324 +13194,42 @@ Einkauf berechnet</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9de3c1901236e59d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing code_cell rendered celltag_start" id="cell-id=bd90afcae5bb3958">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="k">new</span><span class="w"> </span><span class="n">Pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=37cfafc462fcca1e"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>White-Box Partitionen:<ul>
-<li>Einkaufswert &lt; 0€</li>
-<li>0€ ≤ Einkaufswert &lt; 50€</li>
-<li>50€ ≤ Einkaufswert &lt; 100€</li>
-<li>100€ ≤ Einkaufswert &lt; 200€</li>
-<li>200€ ≤ Einkaufswert &lt; 500€ (Maximaler Rabatt von 100€)</li>
-<li>Einkaufswert ≥ 500€</li>
+<h2 id="Regeln-zur-Vermeidung-von-Disinformation">Regeln zur Vermeidung von Disinformation<a class="anchor-link" href="#Regeln-zur-Vermeidung-von-Disinformation">¶</a></h2><ul>
+<li>Nimm keinen Typ in einen Variablennamen auf, wenn die Variable nicht von
+diesem Typ ist<ul>
+<li>Meistens: Gib überhaupt keinen Typ in einem Variablennamen an</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=83e51a02b9df2ac1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=1cedc5be5c906bd7">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">params</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
+<div class="highlight hl-java"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">vectorOfCards</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=dd5fc93bfd5a2e7c">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.provider.ValueSource</span><span class="p">;</span>
-
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=9e34aa251c4f4aa1">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d9a79fc77081dd9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ae6065291bf016c8">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">DiscountCalculatorBlackBoxTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mf">49.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionBelow50</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mf">199.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition50to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=3872f8ab5b679158">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">DiscountCalculatorBlackBoxTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=98ce335cc02acf5b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">DiscountCalculatorWhiteBoxTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1000</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testNegativePurchaseAmount</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertThrows</span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mf">49.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionBelow50</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">75</span><span class="p">,</span><span class="w"> </span><span class="mf">99.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition50to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w"> </span><span class="mf">199.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition100to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w"> </span><span class="mf">499.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">10000</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove500</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2640b16ad381d07c">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">DiscountCalculatorWhiteBoxTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=1ee79fc856c3f32e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Workshop:-Partitionierung">Workshop: Partitionierung<a class="anchor-link" href="#Workshop:-Partitionierung">¶</a></h2><p>In diesem Workshop werden wir die gelernten Techniken auf eine einfache
-Funktion anwenden. Wir werden eine Funktion <code>validateAndFormatPhoneNumber</code>
-implementieren und testen.</p>
-<p>Die Funktion soll eine US-Amerikanische Telefonnummer validieren und im
-Format <code>(XXX) XXX-XXXX</code> zurückgeben.</p>
-<ul>
-<li>Die Telefonnummer darf nicht <code>null</code> oder leer sein, sonst wird eine
-<code>IllegalArgumentException</code> geworfen.</li>
-<li>Die Telefonnummer besteht aus 10 oder 11 Ziffern.</li>
-<li>Bei 11 Ziffern muss die Telefonnummer mit einer <code>1</code> beginnen.</li>
-<li>Wenn eine Telefonnummer weniger als 10 oder mehr als 11 Ziffern hat, wird
-eine <code>IllegalArgumentException</code> geworfen.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=40bac68de7b48b1b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PhoneNumberFormatter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">validateAndFormatPhoneNumber</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">phoneNumber</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Phone number cannot be null or empty"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">digitsOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">"\\D"</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Phone number must have 10 or 11 digits"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">"1"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"11-digit numbers must start with 1"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">areaCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">firstPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">secondPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
-
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"(%s) %s-%s"</span><span class="p">,</span><span class="w"> </span><span class="n">areaCode</span><span class="p">,</span><span class="w"> </span><span class="n">firstPart</span><span class="p">,</span><span class="w"> </span><span class="n">secondPart</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=8f69dc0d54091e8f">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">PhoneNumberFormatter</span><span class="p">.</span><span class="na">validateAndFormatPhoneNumber</span><span class="p">(</span><span class="s">"1234567890"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=adabada67f8d9f70">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">params</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9f88a57bc21839c9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.provider.MethodSource</span><span class="p">;</span>
-
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=033ea9be952834ee">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f6a456547acf1c8a">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=40e400e454c56af4"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Identifizieren Sie Äquivalenzklassen für die Eingaben der Funktion.</li>
-<li>Implementieren Sie Testfälle für jede Partition.</li>
-<li>Welche Black-Box-Partitionen können Sie identifizieren?</li>
-<li>Welche White-Box-Partitionen können Sie identifizieren?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_start celltag_subslide" id="cell-id=c2130d09c4993dcd">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">PhoneNumberFormatterTest</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testImportsWork</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">// TODO: Add more test cases here</span>
-
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=c210d4e1713f171c">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=9e9937866071affa">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13691,7 +13240,29 @@ eine <code>IllegalArgumentException</code> geworfen.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=6b4e03423667dbb7">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=b4987938faa9ffeb">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4c6accbb9ebbae93">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cardArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=74daee6eaa0d76d0">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13699,6 +13270,403 @@ eine <code>IllegalArgumentException</code> geworfen.</li>
 <div class="highlight hl-java"><pre><span></span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=d65d5f16a9470385"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Regeln-zur-Vermeidung-von-Disinformation">Regeln zur Vermeidung von Disinformation<a class="anchor-link" href="#Regeln-zur-Vermeidung-von-Disinformation">¶</a></h2><ul>
+<li>Sei vorsichtig mit Namen, die sich nur geringfügig unterscheiden</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=bfb60dfba86fe8a7">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kt">boolean</span><span class="w"> </span><span class="n">isMeleeDefenceAvailable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="kt">boolean</span><span class="w"> </span><span class="n">isMeleeDefenseAvailable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=7dd50ae36cc1663f">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="c1">// Ooops...</span>
+<span class="n">isMeleeDefenceAvailable</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">isMeleeDefenseAvailable</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=e90888841b52d162"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Sinnvolle-Unterscheidungen">Sinnvolle Unterscheidungen<a class="anchor-link" href="#Sinnvolle-Unterscheidungen">¶</a></h2><ul>
+<li>Sei bei der Namensgebung konsistent</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=751b8e17d8a194c9">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfObjects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">numBuyers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">nTransactions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9cd604809c035b54">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">numObjects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">numBuyers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">numTransactions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=5e42430c2bdf0d29">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">nObjects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">nBuyers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">nTransactions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=e73397120fa2b3df"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Sinnvolle-Unterscheidungen">Sinnvolle Unterscheidungen<a class="anchor-link" href="#Sinnvolle-Unterscheidungen">¶</a></h2><ul>
+<li>Verwende Namen, die die Bedeutung der Konzepte so klar wie möglich ausdrücken</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=3ffebbb8fac1750b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">String</span><span class="w"> </span><span class="n">animal1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Fluffy"</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">animal2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Garfield"</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=c4e28fc24fb7cb91">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">String</span><span class="w"> </span><span class="n">janesDog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Fluffy"</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">jonsCat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Garfield"</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=7dd15914477f6862">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_NONE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_FIRST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_SECOND</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_BOTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=39a541f2479304bd">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_NO_DATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_START_DATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_END_DATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INCLUDE_START_AND_END_DATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=bc721a7e84eb22c6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">enum</span><span class="w"> </span><span class="n">DatesToInclude</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">NONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">START</span><span class="p">,</span>
+<span class="w">    </span><span class="n">END</span><span class="p">,</span>
+<span class="w">    </span><span class="n">START_AND_END</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=22f86ae7d4bb2206">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">DatesToInclude</span><span class="p">.</span><span class="na">START</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=312fdc5fe238dd0d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">enum</span><span class="w"> </span><span class="n">DatesToInclude</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">START</span><span class="p">,</span>
+<span class="w">    </span><span class="n">END</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=ef46255329427d68">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">EnumSet</span><span class="o">&lt;</span><span class="n">DatesToInclude</span><span class="o">&gt;</span><span class="w"> </span><span class="n">datesToInclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EnumSet</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">DatesToInclude</span><span class="p">.</span><span class="na">START</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=49f66bd7d645d8d3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">datesToInclude</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=8baf9d2bb4ba1556"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Sinnvolle-Unterscheidungen">Sinnvolle Unterscheidungen<a class="anchor-link" href="#Sinnvolle-Unterscheidungen">¶</a></h2><ul>
+<li>Verwende denselben Namen für dasselbe Konzept</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=4a68234225013a95">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">OrderLine</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">quantity</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">pricePerItem</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">OrderLine</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">quantity</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">pricePerItem</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">quantity</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">pricePerItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pricePerItem</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getTotalCost</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">quantity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pricePerItem</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=5e4c2dd00d3e6c19"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Workshop:-Entfernen-von-Namensverletzungen">Workshop: Entfernen von Namensverletzungen<a class="anchor-link" href="#Workshop:-Entfernen-von-Namensverletzungen">¶</a></h2><ul>
+<li>Analysieren Sie die folgenden Code-Snippets und korrigieren Sie die Namensverletzungen</li>
+<li>Beachten Sie dabei die Regeln, die wir besprochen haben</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=8327d1e0cd9ca001"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Beispiel-1">Beispiel 1<a class="anchor-link" href="#Beispiel-1">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4d8b02324c5d7960">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kt">boolean</span><span class="w"> </span><span class="n">isUserActive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4fb55e6ab7b1a03e">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isUserActive</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Deleting user account..."</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=003cce4a93f8b973">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=66cb7892121c72ec"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Beispiel-2">Beispiel 2<a class="anchor-link" href="#Beispiel-2">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=808d6e6d760e6e67">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">itemList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=64124400c08e31b1">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=65963a88d8053e7b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Beispiel-3">Beispiel 3<a class="anchor-link" href="#Beispiel-3">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d9e225cfed5f736f">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="c1">// Syntax of data is correct</span>
+<span class="kt">boolean</span><span class="w"> </span><span class="n">isDataValidated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="c1">// Contents of the data has been verified</span>
+<span class="kt">boolean</span><span class="w"> </span><span class="n">isDataVerified</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=0ef92d5c80bccb48">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=29685f637f640184"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Beispiel-4">Beispiel 4<a class="anchor-link" href="#Beispiel-4">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=029ad05e03a7ce64">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">itemCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">numberOfStudents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">numTeachers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=a7a389abb0b44fb6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=44ac975557baee77"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Workshop:-Namen-in-existierendem-Code">Workshop: Namen in existierendem Code<a class="anchor-link" href="#Workshop:-Namen-in-existierendem-Code">¶</a></h2><ul>
+<li>Analysieren Sie ein Programm, an dem Sie arbeiten ob die Namen gut sind</li>
+<li>Verbessern Sie die Namen, falls das möglich ist<ul>
+<li>Achten Sie aber darauf, dass Sie nicht gegen die Coding-Standards
+des Projekts verstoßen</li>
+</ul>
+</li>
+<li>Verbessert sich die Lesbarkeit des Codes?</li>
+<li>Diskutieren Sie Ihre Ergebnisse mit Ihren Kollegen</li>
+</ul>
 </div>
 </div>
 </div>

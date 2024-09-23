@@ -13086,7 +13086,7 @@ div#notebook {
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=560faf804e63628c"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=e789ca1728fc8b61"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img alt="Java Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0
@@ -13115,7 +13115,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 " style="display:block;margin:auto;width:5%"/>
 <br/></p>
 <div style="text-align:center; font-size:200%;">
-<b>Finden von Tests: BVA und Partitionen</b>
+<b>Effective Java T1: Statische Fabrikmethoden</b>
 </div>
 <br>
 <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -13125,237 +13125,48 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=25004aa0cfaffb5d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=48da6e1f61bc6e14"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Strategien-zum-Finden-von-(guten)-Tests">Strategien zum Finden von (guten) Tests<a class="anchor-link" href="#Strategien-zum-Finden-von-(guten)-Tests">¶</a></h1><ul>
-<li>Analyse von Randwerten (Boundary Value Analysis, BVA)</li>
-<li>Partitionierung</li>
-<li>Zustandsbasiertes Testen</li>
-<li>Kontrollflussbasiertes Testen</li>
-<li>Richtlinien</li>
-<li>Kenntnis häufiger Fehler in Software</li>
-<li>(Kenntnis häufiger Probleme von Tests (Test Smells))</li>
+<h2 id="Statische-Fabrikmethoden">Statische Fabrikmethoden<a class="anchor-link" href="#Statische-Fabrikmethoden">¶</a></h2><ul>
+<li>Alternative zu öffentlichen Konstruktoren</li>
+<li>Statische Methode, die eine Instanz zurückgibt</li>
+<li>Viele Vorteile, aber auch Nachteile gegenüber Konstruktoren</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9167e2ddb10e2a29"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boundary-Value-Analysis">Boundary Value Analysis<a class="anchor-link" href="#Boundary-Value-Analysis">¶</a></h2><ul>
-<li>Viele Fehler treten am "Rand" des Definitionsbereichs von Funktionen
-oder Methoden auf</li>
-<li>Eine gute Strategie zum effizienten Testen ist es daher, derartige
-Randwerte zu betrachten<ul>
-<li>Der/die letzten gültigen Werte</li>
-<li>Werte, die gerade außerhalb des Definitionsbereichs liegen</li>
-</ul>
-</li>
-<li>Ist z.B. eine Funktion für ganzzahlige Werte zwischen 0 und 5
-definiert, so kann sie mit Eingaben -1, 0, 5, 6 getestet werden</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=24ef75af5e3c488f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boundary-Value-Analysis">Boundary Value Analysis<a class="anchor-link" href="#Boundary-Value-Analysis">¶</a></h2><h3 id="Vorteil:">Vorteil:<a class="anchor-link" href="#Vorteil:">¶</a></h3><ul>
-<li>Man konzentriert sich auf empirisch häufige Fehlerquellen</li>
-</ul>
-<h3 id="Schwierigkeiten:">Schwierigkeiten:<a class="anchor-link" href="#Schwierigkeiten:">¶</a></h3><ul>
-<li>Bei vielen Bereichen ist nicht klar, was "Randwerte" sind<ul>
-<li>(Allerdings lassen sich oft alternative Kriterien finden, z.B.
-Länge von Collection-Argumenten)</li>
-</ul>
-</li>
-<li>Werte außerhalb des Definitionsbereichs können manchmal zu undefiniertem
-Verhalten führen</li>
-<li>Bei Funktionen mit vielen Parametern gibt es eine kombinatorische
-Explosion von Randwerten</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=55cbaf2c98f5ea3b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Partitionierung">Partitionierung<a class="anchor-link" href="#Partitionierung">¶</a></h2><ul>
-<li>Argumente von Funktionen, Ein/Ausgabe des Programms und Zustände
-von Klassen können oft in Äquivalenzklassen unterteilt werden, sodass…<ul>
-<li>Das Verhalten für Elemente aus der gleichen Äquivalenzklasse ähnlich
-ist (z.B. den gleichen Kontrollflusspfad nimmt)</li>
-<li>Elemente aus unterschiedlichen Klassen verschiedenes Verhalten zeigen</li>
-<li>Beispiel: Die Argumente der sqrt-Funktion können unterteilt werden in<ul>
-<li>Positive Zahlen und 0</li>
-<li>Negative Zahlen</li>
-</ul>
-</li>
-<li>Eine feinere Unterteilung wäre zusätzlich in Quadratzahlen und Nicht-Quadratzahlen</li>
-</ul>
-</li>
-<li>Eine derartige Äquivalenzklasse heißt Partition (oder Domäne)</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=81fa0f7d7d973647"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Partitionierung">Partitionierung<a class="anchor-link" href="#Partitionierung">¶</a></h2><p>Finde Partitionen für das getestete Element und teste die folgenden Elemente:</p>
-<ul>
-<li>Einen Wert aus der "Mitte" der Partition</li>
-<li>Einen Wert auf oder nahe jeder Partitionsgrenze</li>
-</ul>
-<p>Häufig findet man Partitionen durch BVA.</p>
-<p>Beispiel: Um die Quadratwurzelfunktion zu testen, schreibe Tests für:</p>
-<ul>
-<li><code>sqrt(0.0)</code></li>
-<li><code>sqrt(2.0)</code></li>
-<li><code>sqrt(-2.0)</code></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=436c53e28eab8d85"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Black-Box-vs.-White-Box-Partitionierung">Black-Box vs. White-Box Partitionierung<a class="anchor-link" href="#Black-Box-vs.-White-Box-Partitionierung">¶</a></h2><ul>
-<li>Wir können die Partitionierung sowohl als Black-Box- als auch als
-White-Box-Technik verwenden</li>
-<li>Bei der Black-Box-Partitionierung betrachten wir nur die Spezifikation
-der Funktion</li>
-<li>Bei der White-Box-Partitionierung betrachten wir auch die Implementierung
-der Funktion</li>
-<li>Die White-Box-Partitionierung kann uns helfen, Partitionen zu finden, die
-auf spezifischen Kontrollflusspfaden durch die Funktion basieren</li>
-<li>In vielen Fällen führen beide Vorgehensweisen zum gleichen Ergebnis</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=bbc9a80e2667760f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Beispiel:-Discount-Berechnung">Beispiel: Discount-Berechnung<a class="anchor-link" href="#Beispiel:-Discount-Berechnung">¶</a></h2><ul>
-<li>In einem Online-Shop haben wir eine Funktion, die den Rabatt für einen
-Einkauf berechnet</li>
-<li>Sie hat folgende Spezifikation:<ul>
-<li>Eingabe: Gesamtbetrag des Einkaufs</li>
-<li>Rückgabewert: Preis nach Abzug des Rabatts</li>
-<li>Für Einkäufe unter 50€ gibt es keinen Rabatt</li>
-<li>Der maximale Rabatt wird ab 200€ Einkaufswert gewährt und beträgt 20%</li>
-</ul>
-</li>
-<li>Welche Partitionen können wir für diese Funktion identifizieren?</li>
-<li>Wie können wir Werte aus jeder Partition testen?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=b73f47c569bda2bd"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Black-Box Partitionen:<ul>
-<li>Einkaufswert &lt; 50€</li>
-<li>50€ ≤ Einkaufswert &lt; 200€</li>
-<li>Einkaufswert ≥ 200€</li>
-</ul>
-</li>
-<li>Testfälle:<ul>
-<li>Einkaufswert = 0€</li>
-<li>Einkaufswert = 25€</li>
-<li>Einkaufswert = 49.99€</li>
-<li>Einkaufswert = 50€ (?)</li>
-<li>Einkaufswert = 100€</li>
-<li>Einkaufswert = 199.99€</li>
-<li>Einkaufswert = 200€</li>
-<li>Einkaufswert = 250€</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9b3e351e1ea449d0"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<table>
-<thead>
-<tr>
-<th>Einkaufswert</th>
-<th style="text-align:center">Test für den Ausgabewert y</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$0€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$25€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$49.99€$</td>
-<td style="text-align:center">$y = 0€$</td>
-</tr>
-<tr>
-<td>$50€$</td>
-<td style="text-align:center">$0€ \leq y &lt; 50€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$100€$</td>
-<td style="text-align:center">$0€ &lt; y &lt; 100€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$199.99€$</td>
-<td style="text-align:center">$0€ &lt; y &lt; 199.99€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$200€$</td>
-<td style="text-align:center">$y = 200€ \cdot 20\%$</td>
-</tr>
-<tr>
-<td>$250€$</td>
-<td style="text-align:center">$y = 250€ \cdot 20\%$</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=85498206c550e247"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Hier ist jetzt die konkrete Implementierung der Funktion.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=765fb12e13dfd658">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=dd7f33868c679611">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DiscountCalculator</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateDiscount</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Purchase amount cannot be negative"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.function.BiFunction</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_start" id="cell-id=93ee558c29d0dd32">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Color</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Color</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">red</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">green</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span>
+<span class="w">            </span><span class="s">"Color: r=%03d g=%03d b=%03d hex=#%02X%02X%02X id=%d"</span><span class="p">,</span>
+<span class="w">            </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">,</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">identityHashCode</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13363,99 +13174,41 @@ Einkauf berechnet</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9de3c1901236e59d"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>White-Box Partitionen:<ul>
-<li>Einkaufswert &lt; 0€</li>
-<li>0€ ≤ Einkaufswert &lt; 50€</li>
-<li>50€ ≤ Einkaufswert &lt; 100€</li>
-<li>100€ ≤ Einkaufswert &lt; 200€</li>
-<li>200€ ≤ Einkaufswert &lt; 500€ (Maximaler Rabatt von 100€)</li>
-<li>Einkaufswert ≥ 500€</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=83e51a02b9df2ac1">
+<div class="cell border-box-sizing code_cell rendered celltag_start" id="cell-id=ef882583b4591518">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">params</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
+<div class="highlight hl-java"><pre><span></span><span class="k">new</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=dd5fc93bfd5a2e7c">
+<div class="cell border-box-sizing code_cell rendered celltag_start celltag_subslide" id="cell-id=257876449ad48b13">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.provider.ValueSource</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Color</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
 
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=9e34aa251c4f4aa1">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d9a79fc77081dd9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ae6065291bf016c8">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">DiscountCalculatorBlackBoxTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mf">49.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionBelow50</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">Color</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">               </span><span class="c1">// &lt;= private constructor</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">red</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">green</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mf">199.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition50to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="nf">fromRgb</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// &lt;= static factory method</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span>
+<span class="w">            </span><span class="s">"Color: r=%03d g=%03d b=%03d hex=#%02X%02X%02X id=%d"</span><span class="p">,</span>
+<span class="w">            </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">,</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">identityHashCode</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -13463,229 +13216,1145 @@ Einkauf berechnet</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=3872f8ab5b679158">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">DiscountCalculatorBlackBoxTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=98ce335cc02acf5b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">DiscountCalculatorWhiteBoxTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1000</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testNegativePurchaseAmount</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertThrows</span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mf">49.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionBelow50</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">75</span><span class="p">,</span><span class="w"> </span><span class="mf">99.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition50to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w"> </span><span class="mf">199.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartition100to200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w"> </span><span class="mf">499.99</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove200</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">),</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@ParameterizedTest</span>
-<span class="w">    </span><span class="nd">@ValueSource</span><span class="p">(</span><span class="n">doubles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">10000</span><span class="p">})</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testPartitionAbove500</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">purchaseAmount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">DiscountCalculator</span><span class="p">.</span><span class="na">calculateDiscount</span><span class="p">(</span><span class="n">purchaseAmount</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2640b16ad381d07c">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">DiscountCalculatorWhiteBoxTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=1ee79fc856c3f32e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Workshop:-Partitionierung">Workshop: Partitionierung<a class="anchor-link" href="#Workshop:-Partitionierung">¶</a></h2><p>In diesem Workshop werden wir die gelernten Techniken auf eine einfache
-Funktion anwenden. Wir werden eine Funktion <code>validateAndFormatPhoneNumber</code>
-implementieren und testen.</p>
-<p>Die Funktion soll eine US-Amerikanische Telefonnummer validieren und im
-Format <code>(XXX) XXX-XXXX</code> zurückgeben.</p>
-<ul>
-<li>Die Telefonnummer darf nicht <code>null</code> oder leer sein, sonst wird eine
-<code>IllegalArgumentException</code> geworfen.</li>
-<li>Die Telefonnummer besteht aus 10 oder 11 Ziffern.</li>
-<li>Bei 11 Ziffern muss die Telefonnummer mit einer <code>1</code> beginnen.</li>
-<li>Wenn eine Telefonnummer weniger als 10 oder mehr als 11 Ziffern hat, wird
-eine <code>IllegalArgumentException</code> geworfen.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=40bac68de7b48b1b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PhoneNumberFormatter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">validateAndFormatPhoneNumber</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">phoneNumber</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Phone number cannot be null or empty"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">digitsOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phoneNumber</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">"\\D"</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Phone number must have 10 or 11 digits"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">"1"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"11-digit numbers must start with 1"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">areaCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">firstPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">secondPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">digitsOnly</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
-
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"(%s) %s-%s"</span><span class="p">,</span><span class="w"> </span><span class="n">areaCode</span><span class="p">,</span><span class="w"> </span><span class="n">firstPart</span><span class="p">,</span><span class="w"> </span><span class="n">secondPart</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=8f69dc0d54091e8f">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">PhoneNumberFormatter</span><span class="p">.</span><span class="na">validateAndFormatPhoneNumber</span><span class="p">(</span><span class="s">"1234567890"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=adabada67f8d9f70">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">params</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9f88a57bc21839c9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.BeforeEach</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.params.provider.MethodSource</span><span class="p">;</span>
-
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=033ea9be952834ee">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f6a456547acf1c8a">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=40e400e454c56af4"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Identifizieren Sie Äquivalenzklassen für die Eingaben der Funktion.</li>
-<li>Implementieren Sie Testfälle für jede Partition.</li>
-<li>Welche Black-Box-Partitionen können Sie identifizieren?</li>
-<li>Welche White-Box-Partitionen können Sie identifizieren?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_start celltag_subslide" id="cell-id=c2130d09c4993dcd">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">PhoneNumberFormatterTest</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testImportsWork</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">// TODO: Add more test cases here</span>
-
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=c210d4e1713f171c">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=d3a09bd65ec6640c">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=8c72938202a8f26f">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e4644f95200aae62">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=77d245fca56ea254"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Vorteile-statischer-Fabrikmethoden">Vorteile statischer Fabrikmethoden<a class="anchor-link" href="#Vorteile-statischer-Fabrikmethoden">¶</a></h2><ol>
+<li>Aussagekräftige Namen</li>
+<li>Nicht jeder Aufruf erzeugt neues Objekt</li>
+<li>Können Untertypen zurückgeben</li>
+<li>Rückgabetyp kann sich mit Parametern ändern</li>
+<li>Klasse des zurückgegebenen Objekts muss nicht <code>public</code> sein</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=7c06c1f0603f0aa0"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Aussagekr%C3%A4ftige-Namen">Aussagekräftige Namen<a class="anchor-link" href="#Aussagekr%C3%A4ftige-Namen">¶</a></h3><ul>
+<li><code>Point</code> kann konstruiert werden aus:<ul>
+<li>Kartesischen Koordinaten $(x, y)$</li>
+<li>Polarkoordinaten $(r, θ)$</li>
+</ul>
+</li>
+<li>Beide Konstruktoren haben dieselbe Signatur</li>
+<li>Factory Methoden:<ul>
+<li><code>fromCartesian(double x, double y)</code></li>
+<li><code>fromRadial(double r, double theta)</code></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=83787764508b42ec">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Point</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Private constructor</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">Point</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Static factory method for Cartesian coordinates</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">fromCartesian</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Static factory method for Radial coordinates</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">fromRadial</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Getters and setters for Cartesian coordinates</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getX</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setX</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getY</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setY</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Getters and setters for Radial coordinates</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getR</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sqrt</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setR</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getTheta</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getTheta</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setTheta</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getR</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Method to set both r and theta at once</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setPolar</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"Point(x=%.2f, y=%.2f, r=%.2f, theta=%.2f)"</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">getR</span><span class="p">(),</span><span class="w"> </span><span class="n">getTheta</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=41d0f01bcae56b59"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Konstruktion-aus-kartesischen-Koordinaten">Konstruktion aus kartesischen Koordinaten<a class="anchor-link" href="#Konstruktion-aus-kartesischen-Koordinaten">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=a0623c609a088adf">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Point</span><span class="p">.</span><span class="na">fromCartesian</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=c158977762eb8b70">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Point</span><span class="p">.</span><span class="na">fromCartesian</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f297178162f1b773">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Point</span><span class="p">.</span><span class="na">fromCartesian</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d9a95bfc00cddaee">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">p</span><span class="p">.</span><span class="na">setTheta</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=af00abd66bd4308d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Konstruktion-aus-Polarkoordinaten">Konstruktion aus Polarkoordinaten<a class="anchor-link" href="#Konstruktion-aus-Polarkoordinaten">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=aae4a52c41465ffc">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Point</span><span class="p">.</span><span class="na">fromCartesian</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=28c86a62a279b445">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Point</span><span class="p">.</span><span class="na">fromRadial</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=b465571a8d0c18ff">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Point</span><span class="p">.</span><span class="na">fromRadial</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=2f61bfc86529afc8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Wiederverwendung-von-Instanzen-(Interned-Instances)">Wiederverwendung von Instanzen (Interned Instances)<a class="anchor-link" href="#Wiederverwendung-von-Instanzen-(Interned-Instances)">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_start" id="cell-id=4f325955ae237ec3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Color</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">Color</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">red</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">green</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="nf">fromHexString</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">hex</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">BiFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">d2s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="n">d2s</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">hex</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">d2s</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">hex</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">d2s</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">hex</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="nf">fromRgb</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="nf">white</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="na">fromRgb</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span>
+<span class="w">            </span><span class="s">"Color: r=%03d g=%03d b=%03d hex=#%02X%02X%02X id=%d"</span><span class="p">,</span>
+<span class="w">            </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">,</span><span class="w"> </span><span class="n">red</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">identityHashCode</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=cd3d336f1f74d0d9">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Color</span><span class="p">.</span><span class="na">white</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=8f7e5556d05e152e">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Color</span><span class="p">.</span><span class="na">fromRgb</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=6d83831fe286b7a2">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Color</span><span class="p">.</span><span class="na">fromHexString</span><span class="p">(</span><span class="s">"#FFFFFF"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=690d161374680673">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Color</span><span class="p">.</span><span class="na">fromRgb</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=04103d31fe541adb">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Color</span><span class="p">.</span><span class="na">fromHexString</span><span class="p">(</span><span class="s">"#6496C8"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9c01cb7fdf255796"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Zur%C3%BCckgeben-von-Untertypen,-dynamischer-R%C3%BCckgabetyp">Zurückgeben von Untertypen, dynamischer Rückgabetyp<a class="anchor-link" href="#Zur%C3%BCckgeben-von-Untertypen,-dynamischer-R%C3%BCckgabetyp">¶</a></h3><ul>
+<li>Statische Fabrikmethoden können Untertypen zurückgeben</li>
+<li>Der Rückgabetyp kann sich für verschiedene Parameter ändern</li>
+<li>Beispiele:<ul>
+<li><code>Collections</code>-Framework</li>
+<li>Figuren in einem Computerspiel</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=c5e100bb078c4fce">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">interface</span> <span class="nc">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=e6df7d0eaa80a6e8">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">Fighter</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Fighter"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d0de0b3a92a6e91">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">Mage</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Mage"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=366b432d1242f398">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Set</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_start" id="cell-id=0053bcd8e786adee">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">interface</span> <span class="nc">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2847b43fb323ed80">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="w"> </span><span class="n">fighter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=6f695119d72505c6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">fighter</span><span class="p">.</span><span class="na">getCharacterClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=e4fd601cab2843fb">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="w"> </span><span class="n">mage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"cast spells"</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=44f2f853906fd79b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">mage</span><span class="p">.</span><span class="na">getCharacterClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=6793889b5d62f069">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Collections</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Set</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=a45149b060f8c09c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Character-Interface-mit-Registrierung-von-Klassen"><code>Character</code>-Interface mit Registrierung von Klassen<a class="anchor-link" href="#Character-Interface-mit-Registrierung-von-Klassen">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=10d28124b29b1d7e">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">interface</span> <span class="nc">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">class</span> <span class="nc">CharacterClassInfo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">requiredAbilities</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">characterClass</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">CharacterClassInfo</span><span class="p">(</span>
+<span class="w">                </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">requiredAbilities</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">characterClass</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">requiredAbilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requiredAbilities</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">characterClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">characterClass</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">CharacterClassInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="n">registeredClasses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerCharacterClass</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">requiredAbilities</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">characterClass</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">registeredClasses</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CharacterClassInfo</span><span class="p">(</span><span class="n">requiredAbilities</span><span class="p">,</span><span class="w"> </span><span class="n">characterClass</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="n">Character</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">abilities</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">CharacterClassInfo</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">registeredClasses</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">abilities</span><span class="p">.</span><span class="na">containsAll</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="na">requiredAbilities</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">Constructor</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">constructor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span><span class="p">.</span><span class="na">characterClass</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">();</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">System</span><span class="p">.</span><span class="na">err</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Error creating instance of "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">info</span><span class="p">.</span><span class="na">characterClass</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">": "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"No suitable character class found for the given abilities."</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ab4d0d652b573d02">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Fighter</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Fighter"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=40fe63e066793e44">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Mage</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getCharacterClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Mage"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=867a75d9c1d8f925">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="p">.</span><span class="na">registerCharacterClass</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"cast spells"</span><span class="p">),</span><span class="w"> </span><span class="n">Mage</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="n">Character</span><span class="p">.</span><span class="na">registerCharacterClass</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"fight"</span><span class="p">),</span><span class="w"> </span><span class="n">Fighter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=5da0270d651c1356">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="w"> </span><span class="n">fighter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"fight"</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=1e2beba8326e27d3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">fighter</span><span class="p">.</span><span class="na">getCharacterClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=6251285d17f163b8">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="w"> </span><span class="n">mage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"cast spells"</span><span class="p">,</span><span class="w"> </span><span class="s">"fly"</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=ea374690e14e1c40">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">mage</span><span class="p">.</span><span class="na">getCharacterClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=d1c2a4a658ffc645">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="w"> </span><span class="n">warMage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"cast spells"</span><span class="p">,</span><span class="w"> </span><span class="s">"fight"</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=071c6cb8c8ccb9a7">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">warMage</span><span class="p">.</span><span class="na">getCharacterClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=b7fb6d8ad2f5affe">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="c1">// Character thief = Character.create(Set.of("steal"));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=9b22b8542b2cf85b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="c1">// Register a default class</span>
+<span class="n">Character</span><span class="p">.</span><span class="na">registerCharacterClass</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(),</span><span class="w"> </span><span class="n">Fighter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=046a6795812d74b4">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Character</span><span class="w"> </span><span class="n">thief</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"steal"</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=ac487d48a2dfe4a6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">thief</span><span class="p">.</span><span class="na">getCharacterClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=1aeba4bb57511978"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Privater-R%C3%BCckgabetyp">Privater Rückgabetyp<a class="anchor-link" href="#Privater-R%C3%BCckgabetyp">¶</a></h3><ul>
+<li>Beispiel: Collections-Framework</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=aa25e62962467d66">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Collections</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=1264b98821733365">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"to"</span><span class="p">,</span><span class="w"> </span><span class="s">"be"</span><span class="p">,</span><span class="w"> </span><span class="s">"or"</span><span class="p">,</span><span class="w"> </span><span class="s">"not"</span><span class="p">,</span><span class="w"> </span><span class="s">"to"</span><span class="p">,</span><span class="w"> </span><span class="s">"be"</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=7cdf6da4d3b68ea0">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">strings</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=99791bd08c57c0fc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Dokumentation von
+<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html#of(">List.of</a>)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=a2729db52ba20ca0">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">strings</span><span class="p">.</span><span class="na">getClass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=a9d57c144f220921">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">strings</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">accessFlags</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=90d20b1adf798db5">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">ArrayList</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">accessFlags</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=c30a75fc342f0699"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Nachteile-statischer-Fabrikmethoden">Nachteile statischer Fabrikmethoden<a class="anchor-link" href="#Nachteile-statischer-Fabrikmethoden">¶</a></h2><ul>
+<li>Klassen ohne öffentliche Konstruktoren nicht ableitbar</li>
+<li>Schwerer zu finden als Konstruktoren</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=d9b7aed939d9291f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="%C3%9Cbliche-Namen-f%C3%BCr-statische-Fabrikmethoden">Übliche Namen für statische Fabrikmethoden<a class="anchor-link" href="#%C3%9Cbliche-Namen-f%C3%BCr-statische-Fabrikmethoden">¶</a></h2><ul>
+<li><code>from</code>: Typumwandlung oder beschriebene Instanz</li>
+<li><code>of</code>: Aggregation mehrerer Parameter</li>
+<li><code>valueOf</code>: Alternative zu <code>from</code> und <code>of</code></li>
+<li><code>instance</code> oder <code>getInstance</code>: Beschriebene Instanz</li>
+<li><code>create</code> oder <code>newInstance</code>: Neue Instanz</li>
+<li><code>get[Type]</code>: Wie <code>getInstance</code>, aber in anderer Klasse</li>
+<li><code>new[Type]</code>: Wie <code>newInstance</code>, aber in anderer Klasse</li>
+<li><code>type</code>: Alternative zu <code>get[Type]</code> und <code>new[Type]</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=cc6a856f26f2120e">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Date</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.time.Instant</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9249e8f7f6826ed0">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Date</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d4e152b5f46f59b2">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span><span class="w"> </span><span class="s">"b"</span><span class="p">,</span><span class="w"> </span><span class="s">"c"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=3ab038ff9fb22516"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Workshop:-Music-Playlist-Generator">Workshop: Music Playlist Generator<a class="anchor-link" href="#Workshop:-Music-Playlist-Generator">¶</a></h2><ul>
+<li>Implementieren Sie eines Systems zur Generierung von Musik-Playlists</li>
+<li>Verwenden Sie dabei statische Fabrikmethoden</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=d804a364559c5443"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Gegebene-Klassen-und-Interfaces">Gegebene Klassen und Interfaces<a class="anchor-link" href="#Gegebene-Klassen-und-Interfaces">¶</a></h3><ul>
+<li><code>Song</code> (Interface)</li>
+<li><code>Mp3Song</code>, <code>WavSong</code> (Implementierungen von <code>Song</code>)</li>
+<li><code>Genre</code>, <code>Mood</code> (Enums)</li>
+<li><code>UserPreferences</code></li>
+<li><code>Playlist</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=e18150d697cb2db1">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">POP</span><span class="p">,</span><span class="w"> </span><span class="n">CLASSICAL</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">HAPPY</span><span class="p">,</span><span class="w"> </span><span class="n">SAD</span><span class="p">,</span><span class="w"> </span><span class="n">ENERGETIC</span><span class="p">,</span><span class="w"> </span><span class="n">RELAXED</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=b4ee4f9c76ce9399">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Song</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">getTitle</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Genre</span><span class="w"> </span><span class="nf">getGenre</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Mood</span><span class="w"> </span><span class="nf">getMood</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=9fc1c61069759993">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Mp3Song</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Song</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="n">genre</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="n">mood</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Mp3Song</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="n">genre</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="n">mood</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">title</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">genre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genre</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">mood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mood</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getTitle</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">title</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="nf">getGenre</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">genre</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="nf">getMood</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mood</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"Mp3Song(%s, %s, %s)"</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">genre</span><span class="p">,</span><span class="w"> </span><span class="n">mood</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=e1e2bb0fe8117b2f">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WavSong</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Song</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="n">genre</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="n">mood</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">WavSong</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="n">genre</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="n">mood</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">title</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">genre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genre</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">mood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mood</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getTitle</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">title</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">Genre</span><span class="w"> </span><span class="nf">getGenre</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">genre</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">Mood</span><span class="w"> </span><span class="nf">getMood</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mood</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"WavSong(%s, %s, %s)"</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">genre</span><span class="p">,</span><span class="w"> </span><span class="n">mood</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=c50d301ca212b6b1">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=6ebe25a4fba268b3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserPreferences</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Genre</span><span class="o">&gt;</span><span class="w"> </span><span class="n">genres</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Mood</span><span class="o">&gt;</span><span class="w"> </span><span class="n">moods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addGenre</span><span class="p">(</span><span class="n">Genre</span><span class="w"> </span><span class="n">genre</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">genres</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">genre</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addMood</span><span class="p">(</span><span class="n">Mood</span><span class="w"> </span><span class="n">mood</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">moods</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">mood</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Genre</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getGenres</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">genres</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Mood</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getMoods</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">moods</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=2a5f97a79a625339">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Playlist</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Song</span><span class="o">&gt;</span><span class="w"> </span><span class="n">songs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addSong</span><span class="p">(</span><span class="n">Song</span><span class="w"> </span><span class="n">song</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">songs</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">song</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Song</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSongs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">songs</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"Playlist"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">songs</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=05cfddbde71ac216">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Songs</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Song</span><span class="o">&gt;</span><span class="w"> </span><span class="n">availableSongs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Mp3Song</span><span class="p">(</span><span class="s">"Bohemian Rhapsody"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">WavSong</span><span class="p">(</span><span class="s">"Stairway to Heaven"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">RELAXED</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Mp3Song</span><span class="p">(</span><span class="s">"Imagine"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">POP</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">RELAXED</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">WavSong</span><span class="p">(</span><span class="s">"Billie Jean"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">POP</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Mp3Song</span><span class="p">(</span><span class="s">"Symphony No. 5"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">CLASSICAL</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">WavSong</span><span class="p">(</span><span class="s">"Für Elise"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">CLASSICAL</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">RELAXED</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Mp3Song</span><span class="p">(</span><span class="s">"Hotel California"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">RELAXED</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">WavSong</span><span class="p">(</span><span class="s">"Like a Rolling Stone"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Mp3Song</span><span class="p">(</span><span class="s">"Yesterday"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">POP</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">SAD</span><span class="p">),</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">WavSong</span><span class="p">(</span><span class="s">"Piano Concerto No. 1"</span><span class="p">,</span><span class="w"> </span><span class="n">Genre</span><span class="p">.</span><span class="na">CLASSICAL</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">HAPPY</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=2dae777cb2f65544"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Aufgaben">Aufgaben<a class="anchor-link" href="#Aufgaben">¶</a></h3><ol>
+<li>Implementieren Sie die statische Fabrikmethode <code>Song.fromGenreAndMood</code></li>
+<li>Implementieren Sie die statische Fabrikmethode <code>Playlist.fromSongs</code></li>
+<li>Implementieren Sie die statische Fabrikmethode <code>Playlist.fromUserPreferences</code></li>
+</ol>
+<p>(Im Folgenden finden Sie genauere Beschreibungen der Aufgaben.)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=dd92057619cde7c3"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-1:-Song.fromGenreAndMood">Aufgabe 1: <code>Song.fromGenreAndMood</code><a class="anchor-link" href="#Aufgabe-1:-Song.fromGenreAndMood">¶</a></h4><ul>
+<li>Implementieren Sie die Methode in der <code>Song</code>-Schnittstelle</li>
+<li>Wählen Sie zufällig ein passendes Lied aus <code>Songs.availableSongs</code></li>
+<li>Wenn kein passendes Lied gefunden wird, werfen Sie eine <code>IllegalArgumentException</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=89e51eeacda7597c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-2:-Playlist.fromSongs">Aufgabe 2: <code>Playlist.fromSongs</code><a class="anchor-link" href="#Aufgabe-2:-Playlist.fromSongs">¶</a></h4><ul>
+<li>Implementieren Sie die Methode in der <code>Playlist</code>-Klasse</li>
+<li>Erstellen Sie eine neue <code>Playlist</code> und fügen Sie alle übergebenen Lieder hinzu</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=6f301357811a6529"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-3:-Playlist.fromUserPreferences">Aufgabe 3: <code>Playlist.fromUserPreferences</code><a class="anchor-link" href="#Aufgabe-3:-Playlist.fromUserPreferences">¶</a></h4><ul>
+<li>Implementieren Sie die Methode in der <code>Playlist</code>-Klasse</li>
+<li>Erstellen Sie eine <code>Playlist</code> basierend auf den Präferenzen des Benutzers</li>
+<li>Wählen Sie für jede Kombination von Genre und Mood ein zufälliges Lied aus</li>
+<li>Verwenden Sie die <code>Song.fromGenreAndMood</code>-Methode</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=db0d94b0be6c9355"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Testen-Sie-Ihre-Implementierung">Testen Sie Ihre Implementierung<a class="anchor-link" href="#Testen-Sie-Ihre-Implementierung">¶</a></h3><ul>
+<li>Erstellen Sie <code>UserPreferences</code> mit verschiedenen Genres und Moods</li>
+<li>Generieren Sie Playlists mit Ihren implementierten Methoden</li>
+<li>Überprüfen Sie, ob die generierten Playlists den Benutzervorlieben entsprechen</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=abe877d280b8b892">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=e1ce2ab08d2e3737">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">UserPreferences</span><span class="w"> </span><span class="n">preferences</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserPreferences</span><span class="p">();</span>
+<span class="n">preferences</span><span class="p">.</span><span class="na">addGenre</span><span class="p">(</span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">);</span>
+<span class="n">preferences</span><span class="p">.</span><span class="na">addGenre</span><span class="p">(</span><span class="n">Genre</span><span class="p">.</span><span class="na">POP</span><span class="p">);</span>
+<span class="n">preferences</span><span class="p">.</span><span class="na">addMood</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">);</span>
+<span class="n">preferences</span><span class="p">.</span><span class="na">addMood</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="na">RELAXED</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4b75f1e2498e792a">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Playlist</span><span class="w"> </span><span class="n">playlist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Playlist</span><span class="p">.</span><span class="na">fromUserPreferences</span><span class="p">(</span><span class="n">preferences</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">playlist</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=cb84d84b5ab7b18d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Song</span><span class="w"> </span><span class="n">rock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Song</span><span class="p">.</span><span class="na">fromGenreAndMood</span><span class="p">(</span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">rock</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=099ad549452de498">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">Playlist</span><span class="w"> </span><span class="n">customPlaylist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Playlist</span><span class="p">.</span><span class="na">fromSongs</span><span class="p">(</span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span>
+<span class="w">    </span><span class="n">Song</span><span class="p">.</span><span class="na">fromGenreAndMood</span><span class="p">(</span><span class="n">Genre</span><span class="p">.</span><span class="na">ROCK</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">ENERGETIC</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Song</span><span class="p">.</span><span class="na">fromGenreAndMood</span><span class="p">(</span><span class="n">Genre</span><span class="p">.</span><span class="na">POP</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">RELAXED</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Song</span><span class="p">.</span><span class="na">fromGenreAndMood</span><span class="p">(</span><span class="n">Genre</span><span class="p">.</span><span class="na">CLASSICAL</span><span class="p">,</span><span class="w"> </span><span class="n">Mood</span><span class="p">.</span><span class="na">HAPPY</span><span class="p">)</span>
+<span class="p">));</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">customPlaylist</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
