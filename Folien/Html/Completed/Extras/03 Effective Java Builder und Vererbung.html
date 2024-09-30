@@ -13086,7 +13086,7 @@ div#notebook {
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=5c871890cc75352d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=85412b27325988b7"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img alt="Java Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0
@@ -13115,7 +13115,7 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 " style="display:block;margin:auto;width:5%"/>
 <br/></p>
 <div style="text-align:center; font-size:200%;">
-<b>Mocking mit Mockito</b>
+<b>Effective Java: Builder und Vererbung</b>
 </div>
 <br>
 <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
@@ -13125,103 +13125,193 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </br></div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=77e52b5ed1919672"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=aa530144652e377f"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Das-Mockito-Mocking-Framework">Das Mockito Mocking Framework<a class="anchor-link" href="#Das-Mockito-Mocking-Framework">¶</a></h1><ul>
-<li><a href="https://site.mockito.org">Mockito</a> ist ein Mocking-Framework für Java</li>
-<li>Ermöglicht das Erstellen von Mock-Objekten</li>
+<h3 id="Builder-Pattern:-Beispiel-in-einer-Klassenhierarchie">Builder Pattern: Beispiel in einer Klassenhierarchie<a class="anchor-link" href="#Builder-Pattern:-Beispiel-in-einer-Klassenhierarchie">¶</a></h3><ul>
+<li>Abstract Builder-Klasse</li>
+<li>Konkrete Builder-Klassen für Unterklassen</li>
+<li>Covarianter Ergebnis-Typ von <code>build()</code> (<code>build()</code> gibt Typ der Unterklasse
+zurück)</li>
+<li>Simuliertes self-type Idiom</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=b73d4125ace0066e">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=b1243d8131a7f600">
 <div class="input">
 <div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">mockito</span><span class="p">:</span><span class="n">mockito</span><span class="o">-</span><span class="n">core</span><span class="p">:</span><span class="mf">4.11</span><span class="p">.</span><span class="o">+</span>
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.EnumSet</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Set</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Objects</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=9e34aa251c4f4aa1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ce9798d61566dc6e">
 <div class="input">
 <div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
-<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">testrunner</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Bicycle</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">Component</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">LIGHTS</span><span class="p">,</span><span class="w"> </span><span class="n">FENDERS</span><span class="p">,</span><span class="w"> </span><span class="n">RACK</span><span class="p">,</span><span class="w"> </span><span class="n">COMPUTER</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">wheelSize</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// f-bounded polymorphism ----vvvvvvvvvvvvvvvvvvvv-----------------</span>
+<span class="w">    </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Builder</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Builder</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">EnumSet</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EnumSet</span><span class="p">.</span><span class="na">noneOf</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">wheelSize</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">addComponent</span><span class="p">(</span><span class="n">Component</span><span class="w"> </span><span class="n">component</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">components</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">Objects</span><span class="p">.</span><span class="na">requireNonNull</span><span class="p">(</span><span class="n">component</span><span class="p">));</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span><span class="w">            </span><span class="c1">// &lt;== Simulated self-type idiom</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">frame</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span><span class="w">            </span><span class="c1">// &lt;== Simulated self-type idiom</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">wheelSize</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">wheelSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span><span class="w">            </span><span class="c1">// &lt;== Simulated self-type idiom</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// ------vvvvvvv------------- Covariant return typing ----------</span>
+<span class="w">        </span><span class="kd">abstract</span><span class="w"> </span><span class="n">Bicycle</span><span class="w"> </span><span class="nf">build</span><span class="p">();</span>
+
+<span class="w">        </span><span class="kd">protected</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">self</span><span class="p">();</span><span class="w">  </span><span class="c1">// &lt;== Simulated self-type idiom</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Bicycle</span><span class="p">(</span><span class="n">Builder</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">components</span><span class="p">.</span><span class="na">clone</span><span class="p">();</span>
+<span class="w">        </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">frame</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wheelSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">wheelSize</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"components="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", frame='"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">'\''</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", wheelSize="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wheelSize</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0d9a79fc77081dd9">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5bf67617dc1a01ae">
 <div class="input">
 <div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">testrunner.TestRunner.runTests</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MountainBike</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bicycle</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">Suspension</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">HARDTAIL</span><span class="p">,</span><span class="w"> </span><span class="n">FULL</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Suspension</span><span class="w"> </span><span class="n">suspension</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// f-bounded polymorphism ---------vvvvvvvvvvvvvvvvvvvvvvvvv-------</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Builder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bicycle</span><span class="p">.</span><span class="na">Builder</span><span class="o">&lt;</span><span class="n">Builder</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">Suspension</span><span class="w"> </span><span class="n">suspension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Suspension</span><span class="p">.</span><span class="na">HARDTAIL</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">suspension</span><span class="p">(</span><span class="n">Suspension</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">suspension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w">                 </span><span class="c1">// &lt;== No more subclassing</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">MountainBike</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">     </span><span class="c1">// &lt;== Covariant return typing</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MountainBike</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">protected</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">self</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">MountainBike</span><span class="p">(</span><span class="n">Builder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+<span class="w">        </span><span class="n">suspension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">suspension</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"MountainBike{"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", suspension="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">suspension</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=897193d4854b7510"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Beispiel:-Mocken-einer-Liste">Beispiel: Mocken einer Liste<a class="anchor-link" href="#Beispiel:-Mocken-einer-Liste">¶</a></h2><ul>
-<li>Erstellen eines Mock-Objekts für eine Liste</li>
-<li>Implementiert alle Methoden des <code>List</code>-Interfaces</li>
-<li>Kann verwendet werden, um Methodenaufrufe zu überprüfen</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=3f57ff016a4f48a6">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=6f71bca39fc8ef16">
 <div class="input">
 <div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RoadBike</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bicycle</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gears</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Builder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bicycle</span><span class="p">.</span><span class="na">Builder</span><span class="o">&lt;</span><span class="n">Builder</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gears</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">gears</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">gears</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">RoadBike</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RoadBike</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">protected</span><span class="w"> </span><span class="n">Builder</span><span class="w"> </span><span class="nf">self</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">RoadBike</span><span class="p">(</span><span class="n">Builder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+<span class="w">        </span><span class="n">gears</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">gears</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"RoadBike{"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="s">", gears="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gears</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="sc">'}'</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=49ac87a50b55e39d">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=36f5c1c0d35ac01a">
 <div class="input">
 <div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.mockito.Mockito.*</span><span class="p">;</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">MountainBike</span><span class="w"> </span><span class="n">mtb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MountainBike</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="na">frame</span><span class="p">(</span><span class="s">"Aluminum"</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">wheelSize</span><span class="p">(</span><span class="mi">29</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">suspension</span><span class="p">(</span><span class="n">MountainBike</span><span class="p">.</span><span class="na">Suspension</span><span class="p">.</span><span class="na">FULL</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">addComponent</span><span class="p">(</span><span class="n">Bicycle</span><span class="p">.</span><span class="na">Component</span><span class="p">.</span><span class="na">COMPUTER</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=473415a7ad082b29">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4e86f40bd5b0b5c4">
 <div class="input">
 <div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=9490a96b02d05657">
-<div class="input">
-<div class="prompt input_prompt">In [7]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">mtb</span>
 </pre></div>
 </div>
 </div>
@@ -13229,20 +13319,36 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[7]:</div>
+<div class="prompt output_prompt">Out[6]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+<pre>MountainBike{components=[COMPUTER], frame='Aluminum', wheelSize=29, suspension=FULL}</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=da646f92980e1d5d">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=f79667a34801c3a1">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">RoadBike</span><span class="w"> </span><span class="n">roadBike</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RoadBike</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="na">frame</span><span class="p">(</span><span class="s">"Carbon"</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">wheelSize</span><span class="p">(</span><span class="mi">28</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">gears</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">addComponent</span><span class="p">(</span><span class="n">Bicycle</span><span class="p">.</span><span class="na">Component</span><span class="p">.</span><span class="na">COMPUTER</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f26f7a7df1abd4fa">
 <div class="input">
 <div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">roadBike</span>
 </pre></div>
 </div>
 </div>
@@ -13252,210 +13358,386 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 <div class="output_area">
 <div class="prompt output_prompt">Out[8]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+<pre>RoadBike{components=[COMPUTER], frame='Carbon', wheelSize=28, gears=22}</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=0e4ece618f6e37f8">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=271b86885dd26d81"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Zusammenfassung">Zusammenfassung<a class="anchor-link" href="#Zusammenfassung">¶</a></h3><ul>
+<li>Builder Pattern ideal für viele Konstruktor-Parameter</li>
+<li>Vereint die Vorteile des teleskopierenden Konstruktors und des JavaBeans
+Patterns</li>
+<li>Leicht lesbar, leicht wartbar, sicher</li>
+<li>Möglich für Klassenhierarchien</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=a7113d10d5eb9fef"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Workshop:-Escape-Room-Design-Builder">Workshop: Escape Room Design Builder<a class="anchor-link" href="#Workshop:-Escape-Room-Design-Builder">¶</a></h2><ul>
+<li>Implementieren Sie ein System zur Erstellung von Escape Rooms</li>
+<li>Verwenden Sie eine Klassenhierarchie und das Builder-Pattern</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9298f2dc9c675a2a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Gegebene-Klassen">Gegebene Klassen<a class="anchor-link" href="#Gegebene-Klassen">¶</a></h3><ul>
+<li><code>Room</code> (Superklasse)</li>
+<li><code>PuzzleRoom</code>, <code>PhysicalChallengeRoom</code>, <code>StoryRoom</code> (Subklassen von <code>Room</code>)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=7e320942d4322177">
 <div class="input">
 <div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Room</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">Component</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">LIGHTS</span><span class="p">,</span><span class="w"> </span><span class="n">FENDERS</span><span class="p">,</span><span class="w"> </span><span class="n">RACK</span><span class="p">,</span><span class="w"> </span><span class="n">COMPUTER</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Room</span><span class="p">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">components</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">difficultyLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">timeLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getWidth</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">width</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getHeight</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">height</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getDifficultyLevel</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getTimeLimit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getComponents</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">components</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getFrame</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span>
+<span class="w">            </span><span class="s">"width=%d, height=%d, difficultyLevel=%d, timeLimit=%d, components=%s, frame=%s"</span><span class="p">,</span>
+<span class="w">            </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[9]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=3389bec9d728fe63">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2100d5a30de8a9a9">
 <div class="input">
 <div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// verify(mockedList).add("World!");</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PuzzleRoom</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Room</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">PuzzleRoom</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">numberOfPuzzles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getNumberOfPuzzles</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"PuzzleRoom(%s, numberOfPuzzles=%d)"</span><span class="p">,</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">toString</span><span class="p">(),</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=4aeaa64b2fa8949a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Überprüfen der Anzahl der Aufrufe:</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=35d19570d2c863e6">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=664d5a377cc8dcad">
 <div class="input">
 <div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">();</span><span class="w">  </span><span class="c1">// Mockito &gt;= 4.10</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PhysicalChallengeRoom</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Room</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">PhysicalChallengeRoom</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">equipmentRequired</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getEquipmentRequired</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"PhysicalChallengeRoom(%s, equipmentRequired=%s)"</span><span class="p">,</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">toString</span><span class="p">(),</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=800d4cecc1a2e5a0">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=6aa7c0667561607d">
 <div class="input">
 <div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StoryRoom</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Room</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">StoryRoom</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">narrativeComplexity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getNarrativeComplexity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"StoryRoom(%s, narrativeComplexity=%s)"</span><span class="p">,</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">toString</span><span class="p">(),</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[12]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=38db5669a9199d3d">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=e950254573a88884">
 <div class="input">
 <div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RoomBuilder</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RoomBuilder</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">EnumSet</span><span class="o">&lt;</span><span class="n">Room</span><span class="p">.</span><span class="na">Component</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EnumSet</span><span class="p">.</span><span class="na">noneOf</span><span class="p">(</span><span class="n">Room</span><span class="p">.</span><span class="na">Component</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">addComponent</span><span class="p">(</span><span class="n">Room</span><span class="p">.</span><span class="na">Component</span><span class="w"> </span><span class="n">component</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">components</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">Objects</span><span class="p">.</span><span class="na">requireNonNull</span><span class="p">(</span><span class="n">component</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">frame</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">difficultyLevel</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">difficultyLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">timeLimit</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">timeLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">abstract</span><span class="w"> </span><span class="n">Room</span><span class="w"> </span><span class="nf">build</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">self</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[13]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=4decef9649c1edcf"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Aufgaben">Aufgaben<a class="anchor-link" href="#Aufgaben">¶</a></h3><ol>
+<li>Implementieren Sie die <code>PuzzleRoomBuilder</code>-Klasse</li>
+<li>Implementieren Sie die <code>PhysicalChallengeRoomBuilder</code>-Klasse</li>
+<li>Implementieren Sie die <code>StoryRoomBuilder</code>-Klasse</li>
+<li>Testen Sie Ihre Implementierung</li>
+</ol>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=33fa01b2944f3f16"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-1:-PuzzleRoomBuilder">Aufgabe 1: <code>PuzzleRoomBuilder</code><a class="anchor-link" href="#Aufgabe-1:-PuzzleRoomBuilder">¶</a></h4><ul>
+<li>Implementieren Sie die <code>PuzzleRoomBuilder</code>-Klasse</li>
+<li>Stellen Sie sicher, dass alle Methoden der <code>RoomBuilder</code>-Superklasse implementiert sind</li>
+<li>Fügen Sie zusätzlich Methoden hinzu, um die Anzahl der Puzzles zu setzen</li>
+</ul>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=69ba3925ee2cc383">
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=120b302c7420f5f1">
 <div class="input">
 <div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PuzzleRoomBuilder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RoomBuilder</span><span class="o">&lt;</span><span class="n">PuzzleRoomBuilder</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="c1">// Default</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PuzzleRoomBuilder</span><span class="w"> </span><span class="nf">numberOfPuzzles</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">numberOfPuzzles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PuzzleRoom</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PuzzleRoom</span><span class="p">(</span>
+<span class="w">            </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="n">numberOfPuzzles</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">PuzzleRoomBuilder</span><span class="w"> </span><span class="nf">self</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[14]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=d68bfbeacb59d0c1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-2:-PhysicalChallengeRoomBuilder">Aufgabe 2: <code>PhysicalChallengeRoomBuilder</code><a class="anchor-link" href="#Aufgabe-2:-PhysicalChallengeRoomBuilder">¶</a></h4><ul>
+<li>Implementieren Sie die <code>PhysicalChallengeRoomBuilder</code>-Klasse</li>
+<li>Stellen Sie sicher, dass alle Methoden der <code>RoomBuilder</code>-Superklasse implementiert sind</li>
+<li>Fügen Sie zusätzlich Methoden hinzu, um das benötigte Equipment zu setzen</li>
+</ul>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=267919d167fbca27">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=656ea965f14226a9">
 <div class="input">
 <div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// verify(mockedList).add("Hello!");</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PhysicalChallengeRoomBuilder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RoomBuilder</span><span class="o">&lt;</span><span class="n">PhysicalChallengeRoomBuilder</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Ropes, Ladders, Hurdles"</span><span class="p">;</span><span class="w"> </span><span class="c1">// Default</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PhysicalChallengeRoomBuilder</span><span class="w"> </span><span class="nf">equipmentRequired</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">equipmentRequired</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PhysicalChallengeRoom</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PhysicalChallengeRoom</span><span class="p">(</span>
+<span class="w">            </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="n">equipmentRequired</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">PhysicalChallengeRoomBuilder</span><span class="w"> </span><span class="nf">self</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=3c9a222f1fcec048">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=a83694f2a5b5fb1a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Aufgabe-3:-StoryRoomBuilder">Aufgabe 3: <code>StoryRoomBuilder</code><a class="anchor-link" href="#Aufgabe-3:-StoryRoomBuilder">¶</a></h4><ul>
+<li>Implementieren Sie die <code>StoryRoomBuilder</code>-Klasse</li>
+<li>Stellen Sie sicher, dass alle Methoden der <code>RoomBuilder</code>-Superklasse implementiert sind</li>
+<li>Fügen Sie zusätzlich Methoden hinzu, um die narrative complexity zu setzen</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=e1edf5320d273c22">
 <div class="input">
 <div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">,</span><span class="w"> </span><span class="n">times</span><span class="p">(</span><span class="mi">2</span><span class="p">)).</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StoryRoomBuilder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RoomBuilder</span><span class="o">&lt;</span><span class="n">StoryRoomBuilder</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"High"</span><span class="p">;</span><span class="w"> </span><span class="c1">// Default</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">StoryRoomBuilder</span><span class="w"> </span><span class="nf">narrativeComplexity</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">narrativeComplexity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">StoryRoom</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StoryRoom</span><span class="p">(</span>
+<span class="w">            </span><span class="n">components</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">difficultyLevel</span><span class="p">,</span><span class="w"> </span><span class="n">timeLimit</span><span class="p">,</span><span class="w"> </span><span class="n">narrativeComplexity</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">StoryRoomBuilder</span><span class="w"> </span><span class="nf">self</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[16]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=5eec1d53d6e6461d"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=c992a12e7275f32c"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Überprüfen, dass eine Methode nicht aufgerufen wurde:</li>
+<h4 id="Aufgabe-4:-Testen-Sie-Ihre-Implementierung">Aufgabe 4: Testen Sie Ihre Implementierung<a class="anchor-link" href="#Aufgabe-4:-Testen-Sie-Ihre-Implementierung">¶</a></h4><ul>
+<li>Erstellen Sie Instanzen der <code>PuzzleRoomBuilder</code>,
+<code>PhysicalChallengeRoomBuilder</code> und <code>StoryRoomBuilder</code></li>
+<li>Erstellen Sie <code>Room</code>-Objekte mithilfe der Builder-Klassen</li>
+<li>Stellen Sie sicher, dass die erstellten <code>Room</code>-Objekte korrekt
+initialisiert sind</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=cec496fe50a871d8">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=4aa3b2e5f09299f6">
 <div class="input">
 <div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">();</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">PuzzleRoom</span><span class="w"> </span><span class="n">puzzleRoom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PuzzleRoomBuilder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addComponent</span><span class="p">(</span><span class="n">Room</span><span class="p">.</span><span class="na">Component</span><span class="p">.</span><span class="na">LIGHTS</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">frame</span><span class="p">(</span><span class="s">"Wood"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">width</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">height</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">difficultyLevel</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">timeLimit</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">numberOfPuzzles</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=c93933306d36144b">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e5ea4357a6d473e6">
 <div class="input">
 <div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">clear</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=641ea8cf58e2a590"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Argument Matcher:<ul>
-<li><code>any()</code>, <code>anyString()</code>, ...</li>
-<li><code>isNull()</code>, <code>endsWith()</code>, <code>argThat()</code>, ...</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=94f4d4d9abb2767b">
-<div class="input">
-<div class="prompt input_prompt">In [19]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">();</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">puzzleRoom</span>
 </pre></div>
 </div>
 </div>
@@ -13463,20 +13745,39 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[19]:</div>
+<div class="prompt output_prompt">Out[18]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+<pre>PuzzleRoom(width=5, height=10, difficultyLevel=3, timeLimit=60, components=[LIGHTS], frame=Wood, numberOfPuzzles=5)</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=4eb038dcd56a8063">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=1bab1d921e622917">
+<div class="input">
+<div class="prompt input_prompt">In [19]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">PhysicalChallengeRoom</span><span class="w"> </span><span class="n">physicalChallengeRoom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PhysicalChallengeRoomBuilder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addComponent</span><span class="p">(</span><span class="n">Room</span><span class="p">.</span><span class="na">Component</span><span class="p">.</span><span class="na">FENDERS</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">frame</span><span class="p">(</span><span class="s">"Metal"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">width</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">height</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">difficultyLevel</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">timeLimit</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">equipmentRequired</span><span class="p">(</span><span class="s">"Ropes, Ladders, Hurdles"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e14328253e476cea">
 <div class="input">
 <div class="prompt input_prompt">In [20]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">anyString</span><span class="p">());</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">physicalChallengeRoom</span>
 </pre></div>
 </div>
 </div>
@@ -13486,39 +13787,37 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 <div class="output_area">
 <div class="prompt output_prompt">Out[20]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+<pre>PhysicalChallengeRoom(width=6, height=12, difficultyLevel=4, timeLimit=45, components=[FENDERS], frame=Metal, equipmentRequired=Ropes, Ladders, Hurdles)</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=8372ffc35fd5fe19">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=d5bead94dbf9e731">
 <div class="input">
 <div class="prompt input_prompt">In [21]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">notNull</span><span class="p">());</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">StoryRoom</span><span class="w"> </span><span class="n">storyRoom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StoryRoomBuilder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addComponent</span><span class="p">(</span><span class="n">Room</span><span class="p">.</span><span class="na">Component</span><span class="p">.</span><span class="na">RACK</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">frame</span><span class="p">(</span><span class="s">"Glass"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">width</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">height</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">difficultyLevel</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">timeLimit</span><span class="p">(</span><span class="mi">75</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">narrativeComplexity</span><span class="p">(</span><span class="s">"High"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[21]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=776a279b4dad7ad4">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=316239f1adc7701e">
 <div class="input">
 <div class="prompt input_prompt">In [22]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">endsWith</span><span class="p">(</span><span class="s">"lo!"</span><span class="p">));</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">storyRoom</span>
 </pre></div>
 </div>
 </div>
@@ -13528,1007 +13827,8 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 <div class="output_area">
 <div class="prompt output_prompt">Out[22]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
+<pre>StoryRoom(width=8, height=15, difficultyLevel=2, timeLimit=75, components=[RACK], frame=Glass, narrativeComplexity=High)</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=df1421de4f2af06e">
-<div class="input">
-<div class="prompt input_prompt">In [23]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// verify(mockedList).add(startsWith("No"));</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=88fe44fa9275536c">
-<div class="input">
-<div class="prompt input_prompt">In [24]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">();</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[24]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=9e5fcf1bc0a98c96">
-<div class="input">
-<div class="prompt input_prompt">In [25]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">isNull</span><span class="p">());</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[25]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=977fc0b13b505bfb"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Mindest- und Maximalanzahl von Aufrufen:</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=e400f018c7d99215">
-<div class="input">
-<div class="prompt input_prompt">In [26]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=ac83554e5c425a7b">
-<div class="input">
-<div class="prompt input_prompt">In [27]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Once!"</span><span class="p">);</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Twice!"</span><span class="p">);</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Twice!"</span><span class="p">);</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Three times!"</span><span class="p">);</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Three times!"</span><span class="p">);</span>
-<span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Three times!"</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[27]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=fc24a306d682142d">
-<div class="input">
-<div class="prompt input_prompt">In [28]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">,</span><span class="w"> </span><span class="n">atLeastOnce</span><span class="p">()).</span><span class="na">add</span><span class="p">(</span><span class="s">"Once!"</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[28]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=3ad9889f136db15a">
-<div class="input">
-<div class="prompt input_prompt">In [29]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">,</span><span class="w"> </span><span class="n">atLeastOnce</span><span class="p">()).</span><span class="na">add</span><span class="p">(</span><span class="s">"Twice!"</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[29]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=086ce733829e9c9c">
-<div class="input">
-<div class="prompt input_prompt">In [30]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">,</span><span class="w"> </span><span class="n">atLeast</span><span class="p">(</span><span class="mi">2</span><span class="p">)).</span><span class="na">add</span><span class="p">(</span><span class="s">"Twice!"</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[30]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=5954e5e1463653a5">
-<div class="input">
-<div class="prompt input_prompt">In [31]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">,</span><span class="w"> </span><span class="n">atMost</span><span class="p">(</span><span class="mi">3</span><span class="p">)).</span><span class="na">add</span><span class="p">(</span><span class="s">"Three times!"</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[31]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>false</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=f9719be12b12d5e5"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Stubbing">Stubbing<a class="anchor-link" href="#Stubbing">¶</a></h2><ul>
-<li>Manchmal ist es notwendig, das Verhalten eines Mock-Objekts zu definieren</li>
-<li>Mit <code>when()</code> und <code>thenReturn()</code> und <code>thenThrow()</code> kann das Verhalten festgelegt werden</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=35bee4b48b5b05b6">
-<div class="input">
-<div class="prompt input_prompt">In [32]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=fb83b8920d202271">
-<div class="input">
-<div class="prompt input_prompt">In [33]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">when</span><span class="p">(</span><span class="n">mockedList</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)).</span><span class="na">thenReturn</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[33]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>org.mockito.internal.stubbing.ConsecutiveStubbing@4cb757ef</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=d2b11341d8314fb9">
-<div class="input">
-<div class="prompt input_prompt">In [34]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">when</span><span class="p">(</span><span class="n">mockedList</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="na">thenThrow</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"No Value!"</span><span class="p">));</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[34]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>org.mockito.internal.stubbing.ConsecutiveStubbing@1b7e0844</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=b86010865baadbfe">
-<div class="input">
-<div class="prompt input_prompt">In [35]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">mockedList</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[35]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>Hello!</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=3b15ed271b432c4c">
-<div class="input">
-<div class="prompt input_prompt">In [36]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// mockedList.get(1)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=25e73fd073f99eef">
-<div class="input">
-<div class="prompt input_prompt">In [37]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=fbac4c80c8b1da1c">
-<div class="input">
-<div class="prompt input_prompt">In [38]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="c1">// verify(mockedList).get(1)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=07b9f436b1893396"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Verwendung-von-Mockito-in-Tests">Verwendung von Mockito in Tests<a class="anchor-link" href="#Verwendung-von-Mockito-in-Tests">¶</a></h2><ul>
-<li>In JUnit-Tests können Mock-Objekte verwendet werden, um Abhängigkeiten zu
-simulieren</li>
-<li>Die <code>verify()</code>-Methode wirft eine Exception, wenn sie einen Fehler findet</li>
-<li>Das führt zu einem fehlgeschlagenen Test</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=16419828ee6fb333">
-<div class="input">
-<div class="prompt input_prompt">In [39]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.mockito.Mockito.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=ebbaa3e05fc59219">
-<div class="input">
-<div class="prompt input_prompt">In [40]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">ListTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">failedTest</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">List</span><span class="w"> </span><span class="n">mockedList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">mockedList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">mockedList</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">"World!"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=179c70cf1e5b150d">
-<div class="input">
-<div class="prompt input_prompt">In [41]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">ListTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Class: ListTest
-  1) testList()
-     [PASS]
-  2) failedTest()
-     [FAIL] - 
-Argument(s) are different! Wanted:
-list.add("World!");
--&gt; at REPL.$JShell$64$ListTest.failedTest($JShell$64.java:33)
-Actual invocations have different arguments:
-list.add("Hello!");
--&gt; at REPL.$JShell$64$ListTest.failedTest($JShell$64.java:31)
-
-
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Test Run Summary:
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Total tests: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>2</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Successful: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Failed: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Skipped: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=86bc5396fdadc453"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Workshop:-Test-eines-Steuerungssystems-f%C3%BCr-ein-Raumschiff">Workshop: Test eines Steuerungssystems für ein Raumschiff<a class="anchor-link" href="#Workshop:-Test-eines-Steuerungssystems-f%C3%BCr-ein-Raumschiff">¶</a></h2><p>In diesem Workshop arbeiten Sie mit einem einfachen Steuerungssystem für ein
-Raumschiff. Das System interagiert mit verschiedenen Sensoren und einem
-Funksender. Ihre Aufgabe ist es, Tests für dieses System mit Mockito zu
-schreiben.</p>
-<p>Hier ist eine einfache Implementierung unseres Raumschiff-Steuerungssystems:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5b8c86b41732693f">
-<div class="input">
-<div class="prompt input_prompt">In [42]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">interface</span> <span class="nc">TemperatureSensor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">getTemperature</span><span class="p">();</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=8bb2a7cc9a1de82b">
-<div class="input">
-<div class="prompt input_prompt">In [43]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">interface</span> <span class="nc">FuelSensor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">getFuelLevel</span><span class="p">();</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=d2a28673f6f8b089">
-<div class="input">
-<div class="prompt input_prompt">In [44]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">interface</span> <span class="nc">RadioTransmitter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">transmit</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=c416c9a6dac04657">
-<div class="input">
-<div class="prompt input_prompt">In [45]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">SpacecraftControlSystem</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">SpacecraftControlSystem</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">radio</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkAndReportStatus</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">();</span>
-<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">fuel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">();</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fuel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-
-<span class="w">        </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Status: Temperature "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">", Fuel "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fuel</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=2608fde4ca57cfc4"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Beispiel">Beispiel<a class="anchor-link" href="#Beispiel">¶</a></h2><p>So könnten Sie dieses System verwenden:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=7e23dd0847b03cd3">
-<div class="input">
-<div class="prompt input_prompt">In [46]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">RealTemperatureSensor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getTemperature</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mf">75.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Simulated temperature reading</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=f5d637cf2378e5b8">
-<div class="input">
-<div class="prompt input_prompt">In [47]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">RealFuelSensor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">FuelSensor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getFuelLevel</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mf">50.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Simulated fuel level</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=61f9edf9505a3100">
-<div class="input">
-<div class="prompt input_prompt">In [48]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">RealRadioTransmitter</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">transmit</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Transmitting: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=469d15337cffaa79">
-<div class="input">
-<div class="prompt input_prompt">In [49]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">realTempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RealTemperatureSensor</span><span class="p">();</span>
-<span class="n">FuelSensor</span><span class="w"> </span><span class="n">realFuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RealFuelSensor</span><span class="p">();</span>
-<span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">realRadio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RealRadioTransmitter</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=8ff4d7ed483c43f2">
-<div class="input">
-<div class="prompt input_prompt">In [50]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">SpacecraftControlSystem</span><span class="w"> </span><span class="n">spacecraft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpacecraftControlSystem</span><span class="p">(</span>
-<span class="w">                                            </span><span class="n">realTempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">realFuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">realRadio</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=b0d703b8a10aaee8">
-<div class="input">
-<div class="prompt input_prompt">In [51]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">spacecraft</span><span class="p">.</span><span class="na">checkAndReportStatus</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Transmitting: Status: Temperature 75.0, Fuel 50.0
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=d42a085c6279da06"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Ihre Aufgabe ist es, Tests für das <code>SpacecraftControlSystem</code> unter Verwendung
-von Mockito zu schreiben. Implementieren Sie die folgenden Testfälle:</p>
-<ol>
-<li>Testen des normalen Betriebs:<ul>
-<li>Überprüfen Sie den normalen Betrieb des Raumschiffs, wenn die Temperatur
-normal und der Kraftstoffstand ausreichend ist.</li>
-</ul>
-</li>
-<li>Testen der Warnung bei hoher Temperatur:<ul>
-<li>Überprüfen Sie, dass das Raumschiff eine Warnung bei einer Temperatur
-über 100 Grad überträgt.</li>
-</ul>
-</li>
-<li>Testen der Warnung bei niedrigem Kraftstoffstand:<ul>
-<li>Überprüfen Sie, dass das Raumschiff eine Warnung bei einem Kraftstoffstand
-unter 10 überträgt.</li>
-</ul>
-</li>
-<li>Testen mehrerer Warnungen:<ul>
-<li>Überprüfen Sie, dass das Raumschiff sowohl eine Warnung bei hoher Temperatur
-als auch bei niedrigem Kraftstoffstand überträgt, wenn beide Bedingungen
-erfüllt sind.</li>
-</ul>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=3b0bf7b4f9d207f5"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Bonusaufgabe:">Bonusaufgabe:<a class="anchor-link" href="#Bonusaufgabe:">¶</a></h4><ol start="5">
-<li>Testen der Fehlerbehandlung:<ul>
-<li>Ändern Sie das <code>SpacecraftControlSystem</code>, um Ausnahmen von den Sensoren
-zu behandeln, und schreiben Sie einen Test, um dieses Verhalten zu überprüfen.</li>
-</ul>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=7ac5ab5436e8a0cd">
-<div class="input">
-<div class="prompt input_prompt">In [52]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">jupiter</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">jupiter</span><span class="o">-</span><span class="n">engine</span><span class="p">:</span><span class="mf">5.8.2</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">junit</span><span class="p">.</span><span class="na">platform</span><span class="p">:</span><span class="n">junit</span><span class="o">-</span><span class="n">platform</span><span class="o">-</span><span class="n">launcher</span><span class="p">:</span><span class="mf">1.9.3</span>
-<span class="o">%</span><span class="n">maven</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">mockito</span><span class="p">:</span><span class="n">mockito</span><span class="o">-</span><span class="n">core</span><span class="p">:</span><span class="mf">4.11</span><span class="p">.</span><span class="o">+</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=1a7f6c5bd5bae0f3">
-<div class="input">
-<div class="prompt input_prompt">In [53]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.mockito.Mockito.*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=1475adeaa219856a">
-<div class="input">
-<div class="prompt input_prompt">In [54]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">SpacecraftControlSystemTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testNormalOperation</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">FuelSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">RadioTransmitter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">75.0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">50.0</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">SpacecraftControlSystem</span><span class="w"> </span><span class="n">spacecraft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpacecraftControlSystem</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">radio</span><span class="p">);</span>
-<span class="w">        </span><span class="n">spacecraft</span><span class="p">.</span><span class="na">checkAndReportStatus</span><span class="p">();</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Status: Temperature 75.0, Fuel 50.0"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testHighTemperatureWarning</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">FuelSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">RadioTransmitter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">110.0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">50.0</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">SpacecraftControlSystem</span><span class="w"> </span><span class="n">spacecraft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpacecraftControlSystem</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">radio</span><span class="p">);</span>
-<span class="w">        </span><span class="n">spacecraft</span><span class="p">.</span><span class="na">checkAndReportStatus</span><span class="p">();</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Status: Temperature 110.0, Fuel 50.0"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testLowFuelWarning</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">FuelSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">RadioTransmitter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">75.0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">SpacecraftControlSystem</span><span class="w"> </span><span class="n">spacecraft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpacecraftControlSystem</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">radio</span><span class="p">);</span>
-<span class="w">        </span><span class="n">spacecraft</span><span class="p">.</span><span class="na">checkAndReportStatus</span><span class="p">();</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Status: Temperature 75.0, Fuel 5.0"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testMultipleWarnings</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">FuelSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">RadioTransmitter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">110.0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">SpacecraftControlSystem</span><span class="w"> </span><span class="n">spacecraft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpacecraftControlSystem</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">radio</span><span class="p">);</span>
-<span class="w">        </span><span class="n">spacecraft</span><span class="p">.</span><span class="na">checkAndReportStatus</span><span class="p">();</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Status: Temperature 110.0, Fuel 5.0"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=ed20fe4d8477dcce">
-<div class="input">
-<div class="prompt input_prompt">In [55]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">runTests</span><span class="p">(</span><span class="n">SpacecraftControlSystemTest</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Class: SpacecraftControlSystemTest
-  1) testMultipleWarnings()
-     [PASS]
-  2) testHighTemperatureWarning()
-     [PASS]
-  3) testLowFuelWarning()
-     [PASS]
-  4) testNormalOperation()
-     [PASS]
-
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Test Run Summary:
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Total tests: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>4</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Successful: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>4</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Failed: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Skipped: </pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide celltag_alt" id="cell-id=60c42e4caa918fac"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Bonusaufgabe:-Fehlerbehandlung">Bonusaufgabe: Fehlerbehandlung<a class="anchor-link" href="#Bonusaufgabe:-Fehlerbehandlung">¶</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_alt" id="cell-id=b0f1b003818a3f0a">
-<div class="input">
-<div class="prompt input_prompt">In [56]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">SpacecraftControlSystemWithExceptionHandling</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="p">;</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">SpacecraftControlSystemWithExceptionHandling</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">radio</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkAndReportStatus</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">();</span>
-<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">fuel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">();</span>
-
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fuel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-
-<span class="w">            </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Status: Temperature "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">", Fuel "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fuel</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">radio</span><span class="p">.</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Error: Sensor malfunction - "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=954e2efe93b6b00c">
-<div class="input">
-<div class="prompt input_prompt">In [57]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">class</span> <span class="nc">SpacecraftControlSystemWithExceptionHandlingTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testExceptionHandling</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">TemperatureSensor</span><span class="w"> </span><span class="n">tempSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">TemperatureSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">FuelSensor</span><span class="w"> </span><span class="n">fuelSensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">FuelSensor</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">RadioTransmitter</span><span class="w"> </span><span class="n">radio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mock</span><span class="p">(</span><span class="n">RadioTransmitter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">()).</span><span class="na">thenThrow</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Temperature sensor failure"</span><span class="p">));</span>
-<span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">fuelSensor</span><span class="p">.</span><span class="na">getFuelLevel</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="mf">50.0</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">SpacecraftControlSystemWithExceptionHandling</span><span class="w"> </span><span class="n">spacecraft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpacecraftControlSystemWithExceptionHandling</span><span class="p">(</span><span class="n">tempSensor</span><span class="p">,</span><span class="w"> </span><span class="n">fuelSensor</span><span class="p">,</span><span class="w"> </span><span class="n">radio</span><span class="p">);</span>
-<span class="w">        </span><span class="n">spacecraft</span><span class="p">.</span><span class="na">checkAndReportStatus</span><span class="p">();</span>
-
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Error: Sensor malfunction - Temperature sensor failure"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="n">startsWith</span><span class="p">(</span><span class="s">"Status:"</span><span class="p">));</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: High temperature!"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="n">radio</span><span class="p">,</span><span class="w"> </span><span class="n">never</span><span class="p">()).</span><span class="na">transmit</span><span class="p">(</span><span class="s">"Warning: Low fuel!"</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
 </div>
 </div>
 </div>
