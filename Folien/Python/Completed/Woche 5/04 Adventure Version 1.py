@@ -269,8 +269,8 @@ public class World {
         this.initialLocationName = initialLocationName;
     }
 
-    public Location getLocationByName(String name) {
-        return locations.get(name);
+    public Map<String, Location> getLocations() {
+        return locations;
     }
 
     public String getInitialLocationName() {

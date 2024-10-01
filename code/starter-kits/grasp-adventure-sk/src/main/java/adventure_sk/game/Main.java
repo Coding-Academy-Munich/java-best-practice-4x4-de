@@ -1,4 +1,4 @@
-package adventure_sk.v1;
+package adventure_sk.game;
 
 import adventure_sk.data.JsonLoader;
 
