@@ -13204,38 +13204,6 @@ Verantwortung notwendig sind.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=5b656588ee6ef31b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.*</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.stream.Stream</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=0011f74c5f536dd0">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileFinder</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">Path</span><span class="o">&gt;</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">walk</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">""</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">paths</span>
-<span class="w">                    </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="na">getFileName</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-<span class="w">                    </span><span class="p">.</span><span class="na">findFirst</span><span class="p">()</span>
-<span class="w">                    </span><span class="p">.</span><span class="na">orElseThrow</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"File not found"</span><span class="p">));</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=4272c5e28d3ae871">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
@@ -13247,7 +13215,30 @@ Verantwortung notwendig sind.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=04c0fb5215c91bea">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=a4663dc47d9e91f7">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="o">%</span><span class="n">jars</span><span class="w"> </span><span class="p">.</span>
+<span class="o">%</span><span class="n">classpath</span><span class="w"> </span><span class="n">json</span><span class="o">-</span><span class="n">loader</span><span class="o">-</span><span class="mf">0.1</span><span class="p">.</span><span class="na">jar</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=ff384ab0d532f2cd">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jsonloader.JsonLoader</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=04c0fb5215c91bea">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13263,37 +13254,12 @@ Verantwortung notwendig sind.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=ebfc6b7f7da73f0e">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=30e699d9fa541541">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JsonLoader</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nf">loadData</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">fileName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">ObjectMapper</span><span class="w"> </span><span class="n">objectMapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectMapper</span><span class="p">();</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">simpleLocations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">objectMapper</span><span class="p">.</span><span class="na">readValue</span><span class="p">(</span>
-<span class="w">                </span><span class="n">FileFinder</span><span class="p">.</span><span class="na">find</span><span class="p">(</span><span class="n">fileName</span><span class="p">).</span><span class="na">toFile</span><span class="p">(),</span>
-<span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">TypeReference</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
-<span class="w">            </span><span class="p">);</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">simpleLocations</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Collections</span><span class="p">.</span><span class="na">emptyList</span><span class="p">();</span><span class="w"> </span><span class="c1">// Return an empty list in case of an exception</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=001060764dba5a72">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-java"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">simpleLocationsData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JsonLoader</span><span class="p">.</span><span class="na">loadData</span><span class="p">(</span><span class="s">"simple-locations.json"</span><span class="p">);</span>
+<div class="highlight hl-java"><pre><span></span><span class="n">JsonLoader</span><span class="p">.</span><span class="na">loadData</span><span class="p">(</span><span class="s">"simple-locations.json"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

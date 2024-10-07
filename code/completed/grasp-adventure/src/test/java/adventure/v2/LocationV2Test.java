@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LocationTest {
+class LocationV2Test {
     private Map<String, Object> locationData;
 
     @BeforeEach
@@ -16,7 +16,7 @@ class LocationTest {
     }
 
     @Test
-    void fromDescription() {
+    void fromData() {
         Location unit = Location.fromData(locationData);
 
         assertEquals("Room 1", unit.name());

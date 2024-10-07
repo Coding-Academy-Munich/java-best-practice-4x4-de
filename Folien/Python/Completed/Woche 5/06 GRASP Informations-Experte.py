@@ -71,23 +71,14 @@
 //      style="float:right;margin:auto;width:70%"/>
 
 // %%
-import java.nio.file.*;
-import java.util.stream.Stream;
-
-// %%
-public class FileFinder {
-    public static Path find(String name) throws java.io.IOException {
-        try (Stream<Path> paths = Files.walk(Paths.get(""))) {
-            return paths
-                    .filter(p -> p.getFileName().toString().equals(name))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("File not found"));
-        }
-    }
-}
-
-// %%
 // %maven com.fasterxml.jackson.core:jackson-databind:2.17.2
+
+// %%
+// %jars .
+// %classpath json-loader-0.1.jar
+
+// %%
+import jsonloader.JsonLoader;
 
 // %%
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -98,24 +89,7 @@ import java.util.Map;
 import java.util.Collections;
 
 // %%
-public class JsonLoader {
-    public static List<Map<String, Object>> loadData(String fileName) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            List<Map<String, Object>> simpleLocations = objectMapper.readValue(
-                FileFinder.find(fileName).toFile(),
-                new TypeReference<List<Map<String, Object>>>() {}
-            );
-            return simpleLocations;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList(); // Return an empty list in case of an exception
-        }
-    }
-}
-
-// %%
-List<Map<String, Object>> simpleLocationsData = JsonLoader.loadData("simple-locations.json");
+JsonLoader.loadData("simple-locations.json")
 
 // %%
 public record Location(String name, String description) {
@@ -167,7 +141,6 @@ public record World(Map<String, Location> locations, String initialLocationName)
         return "World{\n" + initialLocationLine + "  Locations:\n" + locationLines + '}';
     }
 }
-
 
 // %%
 World world = World.fromJsonFile("simple-locations.json");

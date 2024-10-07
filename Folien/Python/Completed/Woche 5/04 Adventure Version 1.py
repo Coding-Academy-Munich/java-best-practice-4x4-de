@@ -269,11 +269,11 @@ public class World {
         this.initialLocationName = initialLocationName;
     }
 
-    public Map<String, Location> getLocations() {
+    public Map<String, Location> locations() {
         return locations;
     }
 
-    public String getInitialLocationName() {
+    public String initialLocationName() {
         return initialLocationName;
     }
 

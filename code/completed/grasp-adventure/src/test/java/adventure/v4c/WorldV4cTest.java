@@ -1,31 +1,29 @@
-package adventure.v2;
+package adventure.v4c;
 
+import adventure.v4b.Location;
+import adventure.v4b.World;
+import adventure.v4b.WorldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class WorldTest {
+class WorldV4cTest {
+    @SuppressWarnings("FieldCanBeLocal")
     private List<Map<String, Object>> locationData;
     private World unit;
 
     @BeforeEach
     void setUp() {
         locationData = List.of(
-                Map.of("name", "Room 1", "description", "This is a room"),
-                Map.of("name", "Room 2", "description", "This is another room"));
-        unit = World.fromLocationData(locationData);
-    }
-
-    @Test
-    void fromLocationData() {
-        World unit = World.fromLocationData(locationData);
-
-        assertEquals(2, unit.locations().size());
-        assertEquals("Room 1", unit.initialLocationName());
+                Map.of("name", "Room 1", "description", "This is a room", "connections", Map.of("north", "Room 2")),
+                Map.of("name", "Room 2", "description", "This is another room", "connections",
+                        Map.of("south", "Room 1")));
+        unit = WorldFactory.fromLocationData(locationData);
     }
 
     @Test
@@ -37,15 +35,23 @@ class WorldTest {
     }
 
     @Test
-    void getLocations() {
+    void locations() {
         assertEquals(2, unit.locations().size());
         assertTrue(unit.locations().containsKey("Room 1"));
         assertTrue(unit.locations().containsKey("Room 2"));
     }
 
     @Test
-    void getInitialLocationName() {
+    void initialLocationName() {
         assertEquals("Room 1", unit.initialLocationName());
+    }
+
+    @Test
+    void worldSetsUpConnections() {
+        adventure.v4b.Location room1 = unit.getLocationByName("Room 1");
+        Location toLoc = room1.getConnectedLocation("north");
+
+        assertEquals(unit.getLocationByName("Room 2"), toLoc);
     }
 
     @Test

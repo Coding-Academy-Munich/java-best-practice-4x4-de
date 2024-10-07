@@ -2,17 +2,11 @@ package adventure.v2;
 
 import adventure.data.JsonLoader;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public record World(Map<String, Location> locations, String initialLocationName) {
-    public World(Map<String, Location> locations, String initialLocationName) {
-        this.locations = new HashMap<>(locations);
-        this.initialLocationName = initialLocationName;
-    }
-
     public Location getLocationByName(String name) {
         return locations.get(name);
     }
