@@ -13378,29 +13378,47 @@ LTEwLjk1MyAyLjcyNS01LjcxNyA4Ljc2M3oiIGZpbGw9IiNmNTgyMTkiLz48L3N2Zz4=
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=6b4e03423667dbb7">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=66e35e696e396bae">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-java"><pre><span></span>
+<div class="highlight hl-java"><pre><span></span><span class="n">AbstractDatabaseAdapter</span><span class="w"> </span><span class="n">dbAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteDatabaseAdapter</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_keep" id="cell-id=6716468e7b7bf69b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>public class Main {
-public static void main(String[] args) {
-AbstractDatabaseAdapter dbAdapter = new ConcreteDatabaseAdapter();
-MyDomainClassV2 myDomainObjectV2 = new MyDomainClassV2(dbAdapter);</p>
-<pre><code>    myDomainObjectV2.performWork("Hello World");
-
-    System.out.println(myDomainObjectV2.retrieveResult());
-}</code></pre>
-<p>}</p>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9276e882f09f2809">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">MyDomainClassV2</span><span class="w"> </span><span class="n">myDomainObjectV2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyDomainClassV2</span><span class="p">(</span><span class="n">dbAdapter</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=7756c9328b7c0f1a">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">myDomainObjectV2</span><span class="p">.</span><span class="na">performWork</span><span class="p">(</span><span class="s">"Hello World"</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=1e3d976d65ba8f24">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-java"><pre><span></span><span class="n">myDomainObjectV2</span><span class="p">.</span><span class="na">retrieveResult</span><span class="p">();</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -13639,7 +13657,7 @@ Adapter für <code>NewWeatherServer</code>.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=8de1a34f8ceecbfe">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=5bdd22c0d0ab9bd5">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
